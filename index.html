@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>URBANPOS - Dashboard Timesheets</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+  :root {
+    --bg: #0f1117;
+    --bg-card: #1a1d27;
+    --bg-card-hover: #222633;
+    --border: #2a2e3d;
+    --text: #e4e7ef;
+    --text-muted: #8b8fa3;
+    --accent: #6366f1;
+    --accent-light: #818cf8;
+    --green: #22c55e;
+    --green-bg: rgba(34,197,94,0.12);
+    --yellow: #eab308;
+    --yellow-bg: rgba(234,179,8,0.12);
+    --red: #ef4444;
+    --red-bg: rgba(239,68,68,0.12);
+    --orange: #f97316;
+    --blue: #3b82f6;
+    --purple: #a855f7;
+    --cyan: #06b6d4;
+    --team-support: #6366f1;
+    --team-install: #06b6d4;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  .header {
+    background: linear-gradient(135deg, #1a1d27 0%, #1e2235 100%);
+    border-bottom: 1px solid var(--border);
+    padding: 24px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .header-left h1 {
+    font-size: 24px;
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-light), var(--cyan));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .header-left p {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-top: 4px;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .live-badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(34,197,94,0.1);
+    border: 1px solid rgba(34,197,94,0.3);
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--green);
+  }
+
+  .live-dot {
+    width: 8px; height: 8px;
+    background: var(--green);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.4; }
+  }
+
+  .date-nav {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .date-nav button {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 6px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    transition: all 0.2s;
+  }
+
+  .date-nav button:hover { background: var(--bg-card-hover); }
+  .date-nav button.active { background: var(--accent); border-color: var(--accent); }
+
+  .date-display {
+    font-size: 14px;
+    font-weight: 500;
+    min-width: 200px;
+    text-align: center;
+  }
+
+  .container { padding: 24px 40px; max-width: 1600px; margin: 0 auto; }
+
+  /* KPI Cards */
+  .kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin-bottom: 28px;
+  }
+
+  .kpi-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 20px 24px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .kpi-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    border-radius: 16px 16px 0 0;
+  }
+
+  .kpi-card:nth-child(1)::before { background: var(--accent); }
+  .kpi-card:nth-child(2)::before { background: var(--green); }
+  .kpi-card:nth-child(3)::before { background: var(--yellow); }
+  .kpi-card:nth-child(4)::before { background: var(--cyan); }
+
+  .kpi-card:hover { transform: translateY(-2px); border-color: var(--accent); }
+
+  .kpi-label {
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+  }
+
+  .kpi-value {
+    font-size: 36px;
+    font-weight: 800;
+    line-height: 1;
+    margin-bottom: 6px;
+  }
+
+  .kpi-sub {
+    font-size: 12px;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .kpi-trend-up { color: var(--green); }
+  .kpi-trend-down { color: var(--red); }
+
+  /* Section titles */
+  .section-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .section-title .badge {
+    font-size: 11px;
+    font-weight: 600;
+    padding: 3px 10px;
+    border-radius: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+
+  .badge-support { background: rgba(99,102,241,0.15); color: var(--accent-light); }
+  .badge-install { background: rgba(6,182,212,0.15); color: var(--cyan); }
+
+  /* Team sections */
+  .teams-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .team-section {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .team-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .team-score {
+    font-size: 28px;
+    font-weight: 800;
+  }
+
+  .team-score-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+  }
+
+  /* Employee rows */
+  .emp-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 4px;
+  }
+
+  .emp-row {
+    background: rgba(255,255,255,0.02);
+    transition: all 0.2s;
+    cursor: pointer;
+  }
+
+  .emp-row:hover { background: rgba(255,255,255,0.05); }
+
+  .emp-row td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .emp-row td:first-child { border-radius: 8px 0 0 8px; }
+  .emp-row td:last-child { border-radius: 0 8px 8px 0; }
+
+  .emp-name {
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .emp-avatar {
+    width: 32px; height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+  }
+
+  .progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 4px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 4px;
+    transition: width 1s ease;
+    position: relative;
+  }
+
+  .progress-bar-fill.green { background: linear-gradient(90deg, #22c55e, #4ade80); }
+  .progress-bar-fill.yellow { background: linear-gradient(90deg, #eab308, #facc15); }
+  .progress-bar-fill.red { background: linear-gradient(90deg, #ef4444, #f87171); }
+
+  .target-line {
+    position: absolute;
+    left: 80%;
+    top: -2px;
+    bottom: -2px;
+    width: 2px;
+    background: white;
+    opacity: 0.4;
+    z-index: 2;
+  }
+
+  .hours-display {
+    font-weight: 700;
+    font-size: 14px;
+    text-align: right;
+    white-space: nowrap;
+  }
+
+  .pct-display {
+    font-weight: 600;
+    font-size: 13px;
+    text-align: right;
+    white-space: nowrap;
+    min-width: 50px;
+  }
+
+  /* Day dots for current week */
+  .day-dots {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .day-dot {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 9px;
+    font-weight: 700;
+    color: white;
+    position: relative;
+  }
+
+  .day-dot.filled { background: var(--green); }
+  .day-dot.partial { background: var(--yellow); }
+  .day-dot.empty { background: rgba(255,255,255,0.06); color: var(--text-muted); }
+  .day-dot.future { background: rgba(255,255,255,0.03); color: rgba(255,255,255,0.15); }
+
+  .day-dot-label {
+    font-size: 9px;
+    color: var(--text-muted);
+    text-align: center;
+    width: 24px;
+  }
+
+  /* Charts area */
+  .charts-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-bottom: 28px;
+  }
+
+  .chart-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+  }
+
+  .chart-title {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .chart-container {
+    position: relative;
+    height: 280px;
+  }
+
+  /* Weekly detail table */
+  .weekly-detail {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 24px;
+    margin-bottom: 28px;
+    overflow-x: auto;
+  }
+
+  .weekly-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 12px;
+  }
+
+  .weekly-table th {
+    text-align: center;
+    padding: 8px 6px;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 11px;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+
+  .weekly-table th:first-child { text-align: left; }
+
+  .weekly-table td {
+    text-align: center;
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+  }
+
+  .weekly-table td:first-child {
+    text-align: left;
+    font-weight: 600;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  .weekly-cell {
+    display: inline-block;
+    padding: 3px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 11px;
+    min-width: 44px;
+  }
+
+  .cell-good { background: var(--green-bg); color: var(--green); }
+  .cell-warn { background: var(--yellow-bg); color: var(--yellow); }
+  .cell-bad { background: var(--red-bg); color: var(--red); }
+  .cell-zero { color: rgba(255,255,255,0.15); }
+
+  .team-separator td {
+    padding: 12px 6px 6px;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 20px;
+    color: var(--text-muted);
+    font-size: 12px;
+    border-top: 1px solid var(--border);
+    margin-top: 20px;
+  }
+
+  /* Responsive */
+  @media (max-width: 1200px) {
+    .teams-grid, .charts-grid { grid-template-columns: 1fr; }
+    .kpi-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+
+  @media (max-width: 768px) {
+    .kpi-grid { grid-template-columns: 1fr; }
+    .container { padding: 16px; }
+    .header { padding: 16px; flex-direction: column; gap: 12px; }
+  }
+
+  /* Tooltip */
+  .tooltip {
+    position: fixed;
+    background: #2a2e3d;
+    border: 1px solid #3a3f52;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 12px;
+    pointer-events: none;
+    z-index: 1000;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    display: none;
+    max-width: 220px;
+  }
+
+  .tab-bar {
+    display: flex;
+    gap: 4px;
+    background: rgba(255,255,255,0.04);
+    border-radius: 10px;
+    padding: 4px;
+    margin-bottom: 20px;
+  }
+
+  .tab-bar button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .tab-bar button.active {
+    background: var(--accent);
+    color: white;
+  }
+
+  .tab-bar button:hover:not(.active) {
+    background: rgba(255,255,255,0.06);
+  }
+
+  .sparkline-container {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    justify-content: center;
+  }
+
+  .sparkbar {
+    width: 4px;
+    border-radius: 2px;
+    transition: height 0.5s ease;
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-left">
+    <h1>URBANPOS — Timesheet Monitor</h1>
+    <p>Suivi quotidien des timesheets techniciens · Objectif 80% de 38h/semaine = 30.4h</p>
+  </div>
+  <div class="header-right">
+    <div class="live-badge">
+      <div class="live-dot"></div>
+      Données live Odoo
+    </div>
+    <div id="lastUpdate" style="font-size:12px; color: var(--text-muted);"></div>
+  </div>
+</div>
+
+<div class="container">
+  <!-- KPI Cards -->
+  <div class="kpi-grid" id="kpiGrid"></div>
+
+  <!-- Team tabs -->
+  <div class="tab-bar" id="viewTabs">
+    <button class="active" onclick="setView('overview')">Vue d'ensemble</button>
+    <button onclick="setView('support')">Team Support</button>
+    <button onclick="setView('install')">Team Installation</button>
+    <button onclick="setView('weekly')">Détail hebdo</button>
+  </div>
+
+  <!-- Overview: both teams side by side -->
+  <div id="viewOverview">
+    <div class="teams-grid">
+      <div class="team-section" id="teamSupportCard"></div>
+      <div class="team-section" id="teamInstallCard"></div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <div class="chart-title">Progression hebdomadaire — Moyenne équipe</div>
+        <div class="chart-container"><canvas id="chartTrend"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-title">Répartition individuelle — Semaine en cours</div>
+        <div class="chart-container"><canvas id="chartBar"></canvas></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Support detail view -->
+  <div id="viewSupport" style="display:none;">
+    <div class="team-section" id="teamSupportDetail"></div>
+    <div class="chart-card" style="margin-top:20px;">
+      <div class="chart-title">Évolution individuelle — Support (4 dernières semaines)</div>
+      <div class="chart-container"><canvas id="chartSupportDetail"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Install detail view -->
+  <div id="viewInstall" style="display:none;">
+    <div class="team-section" id="teamInstallDetail"></div>
+    <div class="chart-card" style="margin-top:20px;">
+      <div class="chart-title">Évolution individuelle — Installation (4 dernières semaines)</div>
+      <div class="chart-container"><canvas id="chartInstallDetail"></canvas></div>
+    </div>
+  </div>
+
+  <!-- Weekly detail table -->
+  <div id="viewWeekly" style="display:none;">
+    <div class="weekly-detail" id="weeklyTable"></div>
+  </div>
+</div>
+
+<div class="footer">
+  URBANPOS Timesheet Monitor · Données extraites d'Odoo en temps réel · Rapport envoyé quotidiennement à sja@urbanpos.be
+</div>
+
+<div class="tooltip" id="tooltip"></div>
+
+<script>
+// ===== DATA =====
+const DATA = {"generated": "2026-04-09T15:34:47.143594", "target_pct": 80, "weekly_hours": 38, "target_weekly_hours": 30.4, "weeks": ["2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12", "2026-W13", "2026-W14", "2026-W15"], "teams": {"Support": {"members": {"Loic De Donder": {"id": 2, "weekly": {"2026-W01": 9.0, "2026-W02": 14.75, "2026-W03": 6.75, "2026-W04": 7.25, "2026-W05": 7.25, "2026-W06": 17.42, "2026-W07": 12.25, "2026-W08": 11.5, "2026-W09": 15.0, "2026-W10": 14.75, "2026-W11": 13.0, "2026-W12": 5.5, "2026-W13": 3.12, "2026-W14": 13.02, "2026-W15": 11.75}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 1.25, "2026-04-08": 2.0, "2026-04-09": 0.5, "2026-04-10": 0}}, "David Moise": {"id": 45, "weekly": {"2026-W01": 11.58, "2026-W02": 19.85, "2026-W03": 39.92, "2026-W04": 27.92, "2026-W05": 22.83, "2026-W06": 23.92, "2026-W07": 27.08, "2026-W08": 29.17, "2026-W09": 28.92, "2026-W10": 20.83, "2026-W11": 20.25, "2026-W12": 12.33, "2026-W13": 20.5, "2026-W14": 36.25, "2026-W15": 19.36}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 2.61, "2026-04-08": 8.75, "2026-04-09": 0, "2026-04-10": 0}}, "Nicolas Tatti": {"id": 38, "weekly": {"2026-W01": 13.42, "2026-W02": 19.08, "2026-W03": 31.75, "2026-W04": 23.08, "2026-W05": 21.58, "2026-W06": 25.58, "2026-W07": 36.58, "2026-W08": 24.0, "2026-W09": 35.25, "2026-W10": 29.75, "2026-W11": 19.92, "2026-W12": 22.92, "2026-W13": 34.75, "2026-W14": 29.09, "2026-W15": 26.75}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 8.0, "2026-04-08": 5.83, "2026-04-09": 4.92, "2026-04-10": 0}}, "Nicolas Pierot": {"id": 49, "weekly": {"2026-W01": 0, "2026-W02": 0, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0, "2026-W09": 0, "2026-W10": 0, "2026-W11": 0, "2026-W12": 0, "2026-W13": 0, "2026-W14": 0, "2026-W15": 8.0}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 0, "2026-04-08": 0, "2026-04-09": 0, "2026-04-10": 0}}, "Julia Pasquier": {"id": 25, "weekly": {"2026-W01": 14.0, "2026-W02": 50.83, "2026-W03": 46.58, "2026-W04": 33.58, "2026-W05": 36.92, "2026-W06": 43.58, "2026-W07": 48.75, "2026-W08": 42.67, "2026-W09": 39.0, "2026-W10": 42.33, "2026-W11": 25.67, "2026-W12": 39.75, "2026-W13": 45.25, "2026-W14": 43.0, "2026-W15": 33.0}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 10.08, "2026-04-08": 6.67, "2026-04-09": 8.25, "2026-04-10": 0}}, "Hendrik Rouvroy": {"id": 16, "weekly": {"2026-W01": 14.0, "2026-W02": 38.0, "2026-W03": 24.25, "2026-W04": 21.75, "2026-W05": 38.0, "2026-W06": 38.0, "2026-W07": 38.0, "2026-W08": 38.0, "2026-W09": 38.0, "2026-W10": 19.5, "2026-W11": 16.5, "2026-W12": 17.17, "2026-W13": 11.75, "2026-W14": 22.0, "2026-W15": 32.0}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 8.0, "2026-04-08": 8.0, "2026-04-09": 8.0, "2026-04-10": 0}}, "Hugo Clavinas": {"id": 31, "weekly": {"2026-W01": 14.0, "2026-W02": 7.75, "2026-W03": 20.75, "2026-W04": 21.5, "2026-W05": 16.75, "2026-W06": 8.0, "2026-W07": 2.5, "2026-W08": 19.5, "2026-W09": 25.5, "2026-W10": 23.25, "2026-W11": 4.0, "2026-W12": 47.0, "2026-W13": 11.5, "2026-W14": 16.75, "2026-W15": 12.25}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 4.25, "2026-04-08": 0, "2026-04-09": 0, "2026-04-10": 0}}}}, "Installation": {"members": {"Guillaume Barbier": {"id": 3, "weekly": {"2026-W01": 14.0, "2026-W02": 11.83, "2026-W03": 11.0, "2026-W04": 6.33, "2026-W05": 9.17, "2026-W06": 21.58, "2026-W07": 11.42, "2026-W08": 16.25, "2026-W09": 9.92, "2026-W10": 24.75, "2026-W11": 18.92, "2026-W12": 9.42, "2026-W13": 9.58, "2026-W14": 16.12, "2026-W15": 9.75}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 1.75, "2026-04-08": 0, "2026-04-09": 0, "2026-04-10": 0}}, "Jean-Christophe Lienard": {"id": 17, "weekly": {"2026-W01": 12.0, "2026-W02": 6.0, "2026-W03": 19.0, "2026-W04": 19.0, "2026-W05": 12.25, "2026-W06": 8.0, "2026-W07": 6.0, "2026-W08": 5.25, "2026-W09": 10.0, "2026-W10": 8.5, "2026-W11": 36.0, "2026-W12": 18.0, "2026-W13": 16.0, "2026-W14": 4.5, "2026-W15": 8.0}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 0, "2026-04-08": 0, "2026-04-09": 0, "2026-04-10": 0}}, "Jonathan Wouters": {"id": 46, "weekly": {"2026-W01": 14.0, "2026-W02": 8.0, "2026-W03": 19.0, "2026-W04": 18.92, "2026-W05": 23.17, "2026-W06": 19.25, "2026-W07": 24.58, "2026-W08": 24.42, "2026-W09": 23.25, "2026-W10": 22.33, "2026-W11": 18.25, "2026-W12": 22.75, "2026-W13": 16.42, "2026-W14": 23.5, "2026-W15": 19.25}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 8.0, "2026-04-08": 3.25, "2026-04-09": 0, "2026-04-10": 0}}, "Kevin Santos": {"id": 12, "weekly": {"2026-W01": 14.5, "2026-W02": 4.5, "2026-W03": 8.5, "2026-W04": 8.5, "2026-W05": 10.5, "2026-W06": 6.75, "2026-W07": 18.25, "2026-W08": 3.33, "2026-W09": 10.5, "2026-W10": 16.0, "2026-W11": 17.0, "2026-W12": 4.5, "2026-W13": 16.5, "2026-W14": 10.79, "2026-W15": 15.75}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 2.25, "2026-04-08": 4.75, "2026-04-09": 0.75, "2026-04-10": 0}}, "Sébastien Jacquet": {"id": 24, "weekly": {"2026-W01": 8.25, "2026-W02": 16.58, "2026-W03": 1.75, "2026-W04": 3.0, "2026-W05": 7.5, "2026-W06": 0.5, "2026-W07": 8.5, "2026-W08": 11.25, "2026-W09": 5.75, "2026-W10": 13.25, "2026-W11": 13.25, "2026-W12": 9.0, "2026-W13": 6.42, "2026-W14": 15.75, "2026-W15": 11.42}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 3.42, "2026-04-08": 0, "2026-04-09": 0, "2026-04-10": 0}}, "Pierre de Meester": {"id": 48, "weekly": {"2026-W01": 0, "2026-W02": 0, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0.75, "2026-W09": 1.75, "2026-W10": 0.5, "2026-W11": 0.75, "2026-W12": 1.0, "2026-W13": 1.25, "2026-W14": 8.0, "2026-W15": 8.75}, "current_week_daily": {"2026-04-06": 8.0, "2026-04-07": 0, "2026-04-08": 0.75, "2026-04-09": 0, "2026-04-10": 0}}}}}};
+
+const TARGET_PCT = DATA.target_pct;
+const TARGET_HOURS = DATA.target_weekly_hours;
+const WEEKLY_HOURS = DATA.weekly_hours;
+const WEEKS = DATA.weeks;
+const CURRENT_WEEK = WEEKS[WEEKS.length - 1];
+
+const COLORS = {
+  support: ['#6366f1','#818cf8','#a5b4fc','#c7d2fe','#4f46e5','#7c3aed','#8b5cf6'],
+  install: ['#06b6d4','#22d3ee','#67e8f9','#a5f3fc','#0891b2','#0ea5e9','#38bdf8']
+};
+
+const DAY_NAMES = ['Lun','Mar','Mer','Jeu','Ven'];
+
+// ===== HELPERS =====
+function getColor(pct) {
+  if (pct >= 80) return 'green';
+  if (pct >= 50) return 'yellow';
+  return 'red';
+}
+
+function getColorHex(pct) {
+  if (pct >= 80) return '#22c55e';
+  if (pct >= 50) return '#eab308';
+  return '#ef4444';
+}
+
+function getCellClass(pct) {
+  if (pct === 0) return 'cell-zero';
+  if (pct >= 80) return 'cell-good';
+  if (pct >= 50) return 'cell-warn';
+  return 'cell-bad';
+}
+
+function initials(name) {
+  return name.split(' ').map(w => w[0]).join('').substring(0,2).toUpperCase();
+}
+
+function weekLabel(w) {
+  const parts = w.split('-W');
+  return 'S' + parseInt(parts[1]);
+}
+
+// ===== KPI CARDS =====
+function renderKPIs() {
+  const grid = document.getElementById('kpiGrid');
+
+  let totalMembers = 0, totalAboveTarget = 0, totalHours = 0;
+  let prevWeekHours = 0;
+  const prevWeek = WEEKS.length >= 2 ? WEEKS[WEEKS.length - 2] : null;
+
+  for (const [teamName, team] of Object.entries(DATA.teams)) {
+    for (const [name, member] of Object.entries(team.members)) {
+      totalMembers++;
+      const currentHours = member.weekly[CURRENT_WEEK] || 0;
+      totalHours += currentHours;
+      const pct = (currentHours / WEEKLY_HOURS) * 100;
+      if (pct >= TARGET_PCT) totalAboveTarget++;
+      if (prevWeek) prevWeekHours += (member.weekly[prevWeek] || 0);
+    }
+  }
+
+  const avgPct = totalMembers > 0 ? (totalHours / (totalMembers * WEEKLY_HOURS)) * 100 : 0;
+  const prevAvgPct = prevWeek && totalMembers > 0 ? (prevWeekHours / (totalMembers * WEEKLY_HOURS)) * 100 : 0;
+  const trend = avgPct - prevAvgPct;
+
+  // Count days so far this week (Mon-Fri up to today)
+  const today = new Date();
+  const dayOfWeek = today.getDay(); // 0=Sun
+  const workDaysPassed = Math.min(Math.max(dayOfWeek === 0 ? 0 : dayOfWeek, 0), 5);
+  const expectedPct = (workDaysPassed / 5) * 100;
+
+  grid.innerHTML = `
+    <div class="kpi-card">
+      <div class="kpi-label">Taux de complétion moyen</div>
+      <div class="kpi-value" style="color:${getColorHex(avgPct)}">${avgPct.toFixed(0)}%</div>
+      <div class="kpi-sub">
+        <span class="${trend >= 0 ? 'kpi-trend-up' : 'kpi-trend-down'}">${trend >= 0 ? '↑' : '↓'} ${Math.abs(trend).toFixed(1)}%</span>
+        vs semaine précédente
+      </div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Techniciens ≥ objectif (80%)</div>
+      <div class="kpi-value" style="color:${totalAboveTarget >= totalMembers*0.7 ? '#22c55e' : '#ef4444'}">${totalAboveTarget}/${totalMembers}</div>
+      <div class="kpi-sub">${((totalAboveTarget/totalMembers)*100).toFixed(0)}% de l'équipe atteint l'objectif</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Heures totales cette semaine</div>
+      <div class="kpi-value" style="color:#eab308">${totalHours.toFixed(0)}h</div>
+      <div class="kpi-sub">sur ${(totalMembers * WEEKLY_HOURS).toFixed(0)}h capacité totale</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Avancement semaine</div>
+      <div class="kpi-value" style="color:#06b6d4">J${workDaysPassed}/5</div>
+      <div class="kpi-sub">Attendu ~${expectedPct.toFixed(0)}% · ${CURRENT_WEEK}</div>
+    </div>
+  `;
+}
+
+// ===== TEAM CARDS =====
+function renderTeamCard(teamName, containerId, detailed) {
+  const container = document.getElementById(containerId);
+  const team = DATA.teams[teamName];
+  const isSupport = teamName === 'Support';
+  const badgeClass = isSupport ? 'badge-support' : 'badge-install';
+  const colors = isSupport ? COLORS.support : COLORS.install;
+
+  let totalHours = 0, memberCount = 0;
+  const members = [];
+
+  for (const [name, member] of Object.entries(team.members)) {
+    const hours = member.weekly[CURRENT_WEEK] || 0;
+    const pct = (hours / WEEKLY_HOURS) * 100;
+    totalHours += hours;
+    memberCount++;
+    members.push({ name, hours, pct, member });
+  }
+
+  members.sort((a, b) => b.pct - a.pct);
+  const teamAvg = memberCount > 0 ? (totalHours / (memberCount * WEEKLY_HOURS)) * 100 : 0;
+
+  let html = `
+    <div class="team-header">
+      <div class="section-title">
+        Team ${teamName}
+        <span class="badge ${badgeClass}">${memberCount} techniciens</span>
+      </div>
+      <div style="text-align:right">
+        <div class="team-score" style="color:${getColorHex(teamAvg)}">${teamAvg.toFixed(0)}%</div>
+        <div class="team-score-label">Moyenne équipe</div>
+      </div>
+    </div>
+    <table class="emp-table">
+      <tr style="color:var(--text-muted); font-size:11px;">
+        <td style="width:160px">Technicien</td>
+        <td>Semaine en cours</td>
+        <td style="width:70px; text-align:right">Heures</td>
+        <td style="width:50px; text-align:right">%</td>
+        ${detailed ? '<td style="width:140px; text-align:center">Jours</td>' : ''}
+      </tr>
+  `;
+
+  members.forEach((m, idx) => {
+    const color = getColor(m.pct);
+    const barWidth = Math.min(m.pct / 100 * 100, 100);
+
+    let dayDotsHtml = '';
+    if (detailed) {
+      const dailyData = m.member.current_week_daily;
+      const days = Object.keys(dailyData).sort();
+      const today = new Date();
+      const todayStr = today.toISOString().split('T')[0];
+
+      dayDotsHtml = '<td><div class="day-dots" style="justify-content:center">';
+      days.forEach((day, di) => {
+        const h = dailyData[day];
+        const isFuture = day > todayStr;
+        let cls = 'empty';
+        if (isFuture) cls = 'future';
+        else if (h >= 7) cls = 'filled';
+        else if (h > 0) cls = 'partial';
+        dayDotsHtml += `<div class="day-dot ${cls}" title="${DAY_NAMES[di]}: ${h}h">${h > 0 ? h.toFixed(0) : (isFuture ? '·' : '0')}</div>`;
+      });
+      dayDotsHtml += '</div></td>';
+    }
+
+    html += `
+      <tr class="emp-row">
+        <td>
+          <div class="emp-name">
+            <div class="emp-avatar" style="background:${colors[idx % colors.length]}">${initials(m.name)}</div>
+            ${m.name.split(' ')[0]}
+          </div>
+        </td>
+        <td>
+          <div class="progress-bar-container">
+            <div class="target-line"></div>
+            <div class="progress-bar-fill ${color}" style="width:${barWidth}%"></div>
+          </div>
+        </td>
+        <td class="hours-display">${m.hours.toFixed(1)}h</td>
+        <td class="pct-display" style="color:${getColorHex(m.pct)}">${m.pct.toFixed(0)}%</td>
+        ${dayDotsHtml}
+      </tr>
+    `;
+  });
+
+  html += '</table>';
+  container.innerHTML = html;
+}
+
+// ===== CHARTS =====
+let chartTrend, chartBar, chartSupportDetail, chartInstallDetail;
+
+function renderCharts() {
+  // Trend chart - team averages over weeks
+  const ctx1 = document.getElementById('chartTrend').getContext('2d');
+
+  const supportAvgs = WEEKS.map(w => {
+    const team = DATA.teams['Support'];
+    let total = 0, count = 0;
+    for (const m of Object.values(team.members)) {
+      total += (m.weekly[w] || 0);
+      count++;
+    }
+    return count > 0 ? ((total / (count * WEEKLY_HOURS)) * 100) : 0;
+  });
+
+  const installAvgs = WEEKS.map(w => {
+    const team = DATA.teams['Installation'];
+    let total = 0, count = 0;
+    for (const m of Object.values(team.members)) {
+      total += (m.weekly[w] || 0);
+      count++;
+    }
+    return count > 0 ? ((total / (count * WEEKLY_HOURS)) * 100) : 0;
+  });
+
+  if (chartTrend) chartTrend.destroy();
+  chartTrend = new Chart(ctx1, {
+    type: 'line',
+    data: {
+      labels: WEEKS.map(weekLabel),
+      datasets: [
+        {
+          label: 'Support',
+          data: supportAvgs,
+          borderColor: '#6366f1',
+          backgroundColor: 'rgba(99,102,241,0.1)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#6366f1',
+        },
+        {
+          label: 'Installation',
+          data: installAvgs,
+          borderColor: '#06b6d4',
+          backgroundColor: 'rgba(6,182,212,0.1)',
+          fill: true,
+          tension: 0.4,
+          borderWidth: 2.5,
+          pointRadius: 4,
+          pointBackgroundColor: '#06b6d4',
+        },
+        {
+          label: 'Objectif 80%',
+          data: WEEKS.map(() => 80),
+          borderColor: 'rgba(255,255,255,0.2)',
+          borderDash: [8, 4],
+          borderWidth: 1.5,
+          pointRadius: 0,
+          fill: false,
+        }
+      ]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: '#8b8fa3', font: { size: 11 }, usePointStyle: true, padding: 16 }
+        },
+        tooltip: {
+          backgroundColor: '#2a2e3d',
+          titleColor: '#e4e7ef',
+          bodyColor: '#e4e7ef',
+          borderColor: '#3a3f52',
+          borderWidth: 1,
+          callbacks: {
+            label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%`
+          }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: { color: '#8b8fa3', font: { size: 11 } }
+        },
+        y: {
+          min: 0, max: 120,
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: { color: '#8b8fa3', font: { size: 11 }, callback: v => v + '%' }
+        }
+      }
+    }
+  });
+
+  // Bar chart - individual current week
+  const ctx2 = document.getElementById('chartBar').getContext('2d');
+  const allMembers = [];
+  const barColors = [];
+
+  for (const [teamName, team] of Object.entries(DATA.teams)) {
+    for (const [name, member] of Object.entries(team.members)) {
+      const hours = member.weekly[CURRENT_WEEK] || 0;
+      const pct = (hours / WEEKLY_HOURS) * 100;
+      allMembers.push({ name: name.split(' ')[0], pct, team: teamName });
+      barColors.push(teamName === 'Support' ? '#6366f1' : '#06b6d4');
+    }
+  }
+  allMembers.sort((a, b) => b.pct - a.pct);
+
+  if (chartBar) chartBar.destroy();
+  chartBar = new Chart(ctx2, {
+    type: 'bar',
+    data: {
+      labels: allMembers.map(m => m.name),
+      datasets: [{
+        data: allMembers.map(m => m.pct),
+        backgroundColor: allMembers.map(m => m.team === 'Support' ? 'rgba(99,102,241,0.7)' : 'rgba(6,182,212,0.7)'),
+        borderColor: allMembers.map(m => m.team === 'Support' ? '#6366f1' : '#06b6d4'),
+        borderWidth: 1,
+        borderRadius: 6,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      indexAxis: 'y',
+      plugins: {
+        legend: { display: false },
+        tooltip: {
+          backgroundColor: '#2a2e3d',
+          titleColor: '#e4e7ef',
+          bodyColor: '#e4e7ef',
+          callbacks: {
+            label: ctx => `${ctx.parsed.x.toFixed(1)}% (${(ctx.parsed.x/100*WEEKLY_HOURS).toFixed(1)}h)`
+          }
+        },
+        annotation: {
+          annotations: {
+            targetLine: {
+              type: 'line',
+              xMin: 80, xMax: 80,
+              borderColor: 'rgba(255,255,255,0.3)',
+              borderDash: [6, 3],
+              borderWidth: 1.5,
+              label: { content: '80%', display: true, color: '#8b8fa3', font: { size: 10 } }
+            }
+          }
+        }
+      },
+      scales: {
+        x: {
+          min: 0,
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: { color: '#8b8fa3', font: { size: 11 }, callback: v => v + '%' }
+        },
+        y: {
+          grid: { display: false },
+          ticks: { color: '#e4e7ef', font: { size: 11, weight: 500 } }
+        }
+      }
+    }
+  });
+}
+
+function renderDetailChart(teamName, canvasId, chartRef) {
+  const canvas = document.getElementById(canvasId);
+  const ctx = canvas.getContext('2d');
+  const team = DATA.teams[teamName];
+  const isSupport = teamName === 'Support';
+  const colors = isSupport ? COLORS.support : COLORS.install;
+  const lastWeeks = WEEKS.slice(-4);
+
+  const datasets = [];
+  let idx = 0;
+  for (const [name, member] of Object.entries(team.members)) {
+    datasets.push({
+      label: name.split(' ')[0],
+      data: lastWeeks.map(w => {
+        const h = member.weekly[w] || 0;
+        return ((h / WEEKLY_HOURS) * 100);
+      }),
+      borderColor: colors[idx % colors.length],
+      backgroundColor: colors[idx % colors.length] + '20',
+      tension: 0.3,
+      borderWidth: 2,
+      pointRadius: 5,
+      pointBackgroundColor: colors[idx % colors.length],
+    });
+    idx++;
+  }
+
+  datasets.push({
+    label: 'Objectif',
+    data: lastWeeks.map(() => 80),
+    borderColor: 'rgba(255,255,255,0.2)',
+    borderDash: [6, 3],
+    borderWidth: 1,
+    pointRadius: 0,
+    fill: false,
+  });
+
+  if (chartRef === 'support' && chartSupportDetail) chartSupportDetail.destroy();
+  if (chartRef === 'install' && chartInstallDetail) chartInstallDetail.destroy();
+
+  const chart = new Chart(ctx, {
+    type: 'line',
+    data: { labels: lastWeeks.map(weekLabel), datasets },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: {
+        legend: {
+          position: 'top',
+          labels: { color: '#8b8fa3', font: { size: 10 }, usePointStyle: true, padding: 12 }
+        },
+        tooltip: {
+          backgroundColor: '#2a2e3d',
+          callbacks: { label: ctx => `${ctx.dataset.label}: ${ctx.parsed.y.toFixed(1)}%` }
+        }
+      },
+      scales: {
+        x: {
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: { color: '#8b8fa3', font: { size: 11 } }
+        },
+        y: {
+          min: 0, max: 120,
+          grid: { color: 'rgba(255,255,255,0.04)' },
+          ticks: { color: '#8b8fa3', callback: v => v + '%' }
+        }
+      }
+    }
+  });
+
+  if (chartRef === 'support') chartSupportDetail = chart;
+  else chartInstallDetail = chart;
+}
+
+// ===== WEEKLY TABLE =====
+function renderWeeklyTable() {
+  const container = document.getElementById('weeklyTable');
+  const last6 = WEEKS.slice(-6);
+
+  let html = `
+    <div class="section-title">Détail hebdomadaire complet</div>
+    <table class="weekly-table">
+      <tr>
+        <th>Technicien</th>
+        ${last6.map(w => `<th>${weekLabel(w)}</th>`).join('')}
+        <th>Moyenne</th>
+        <th>Tendance</th>
+      </tr>
+  `;
+
+  for (const [teamName, team] of Object.entries(DATA.teams)) {
+    const isSupport = teamName === 'Support';
+    html += `<tr class="team-separator"><td colspan="${last6.length + 3}" style="color:${isSupport ? 'var(--accent-light)' : 'var(--cyan)'}">Team ${teamName}</td></tr>`;
+
+    const sortedMembers = Object.entries(team.members).sort((a, b) => {
+      const aAvg = last6.reduce((s, w) => s + (a[1].weekly[w] || 0), 0) / last6.length;
+      const bAvg = last6.reduce((s, w) => s + (b[1].weekly[w] || 0), 0) / last6.length;
+      return bAvg - aAvg;
+    });
+
+    for (const [name, member] of sortedMembers) {
+      const weekValues = last6.map(w => member.weekly[w] || 0);
+      const avg = weekValues.reduce((s, v) => s + v, 0) / weekValues.length;
+      const avgPct = (avg / WEEKLY_HOURS) * 100;
+
+      // Trend: compare last 3 weeks avg vs first 3 weeks avg
+      const firstHalf = weekValues.slice(0, 3).reduce((s, v) => s + v, 0) / 3;
+      const secondHalf = weekValues.slice(3).reduce((s, v) => s + v, 0) / 3;
+      const trendDir = secondHalf > firstHalf ? '↑' : secondHalf < firstHalf ? '↓' : '→';
+      const trendColor = secondHalf >= firstHalf ? 'var(--green)' : 'var(--red)';
+
+      // Sparkline
+      const maxVal = Math.max(...weekValues, 1);
+      const sparkHtml = weekValues.map(v => {
+        const h = Math.max(2, (v / WEEKLY_HOURS) * 24);
+        const pct = (v / WEEKLY_HOURS) * 100;
+        return `<div class="sparkbar" style="height:${h}px; background:${getColorHex(pct)}"></div>`;
+      }).join('');
+
+      html += `
+        <tr>
+          <td>${name}</td>
+          ${weekValues.map(v => {
+            const pct = (v / WEEKLY_HOURS) * 100;
+            return `<td><span class="weekly-cell ${getCellClass(pct)}">${v > 0 ? v.toFixed(1) + 'h' : '—'}</span></td>`;
+          }).join('')}
+          <td><span class="weekly-cell ${getCellClass(avgPct)}">${avg.toFixed(1)}h</span></td>
+          <td>
+            <div class="sparkline-container">
+              ${sparkHtml}
+              <span style="color:${trendColor}; font-weight:700; margin-left:4px;">${trendDir}</span>
+            </div>
+          </td>
+        </tr>
+      `;
+    }
+  }
+
+  html += '</table>';
+  container.innerHTML = html;
+}
+
+// ===== VIEW SWITCHING =====
+function setView(view) {
+  document.querySelectorAll('#viewTabs button').forEach((b, i) => {
+    b.classList.toggle('active',
+      (view === 'overview' && i === 0) ||
+      (view === 'support' && i === 1) ||
+      (view === 'install' && i === 2) ||
+      (view === 'weekly' && i === 3)
+    );
+  });
+
+  document.getElementById('viewOverview').style.display = view === 'overview' ? '' : 'none';
+  document.getElementById('viewSupport').style.display = view === 'support' ? '' : 'none';
+  document.getElementById('viewInstall').style.display = view === 'install' ? '' : 'none';
+  document.getElementById('viewWeekly').style.display = view === 'weekly' ? '' : 'none';
+
+  if (view === 'support') {
+    renderTeamCard('Support', 'teamSupportDetail', true);
+    renderDetailChart('Support', 'chartSupportDetail', 'support');
+  }
+  if (view === 'install') {
+    renderTeamCard('Installation', 'teamInstallDetail', true);
+    renderDetailChart('Installation', 'chartInstallDetail', 'install');
+  }
+  if (view === 'weekly') {
+    renderWeeklyTable();
+  }
+}
+
+// ===== INIT =====
+function init() {
+  document.getElementById('lastUpdate').textContent =
+    'Mis à jour: ' + new Date(DATA.generated).toLocaleString('fr-BE');
+
+  renderKPIs();
+  renderTeamCard('Support', 'teamSupportCard', false);
+  renderTeamCard('Installation', 'teamInstallCard', false);
+  renderCharts();
+}
+
+init();
+</script>
+</body>
+</html>
