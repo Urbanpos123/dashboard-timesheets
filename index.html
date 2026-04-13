@@ -531,6 +531,172 @@
     border-radius: 2px;
     transition: height 0.5s ease;
   }
+
+  /* Modal styles */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.7);
+    backdrop-filter: blur(4px);
+    z-index: 1000;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.2s ease;
+  }
+  .modal-overlay.active { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  @keyframes slideUp { from { transform: translateY(30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+  .modal-content {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    width: 90%;
+    max-width: 800px;
+    max-height: 85vh;
+    overflow: hidden;
+    animation: slideUp 0.25s ease;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, rgba(99,102,241,0.08), rgba(6,182,212,0.08));
+  }
+
+  .modal-header h2 {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--text);
+  }
+
+  .modal-header .modal-subtitle {
+    font-size: 12px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .modal-close {
+    background: rgba(255,255,255,0.08);
+    border: 1px solid var(--border);
+    color: var(--text-muted);
+    width: 32px;
+    height: 32px;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    transition: all 0.15s;
+  }
+  .modal-close:hover { background: rgba(239,68,68,0.2); color: var(--red); border-color: var(--red); }
+
+  .modal-body {
+    padding: 20px 24px;
+    overflow-y: auto;
+    flex: 1;
+  }
+
+  .modal-summary {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .modal-stat {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px 16px;
+    text-align: center;
+  }
+
+  .modal-stat-value {
+    font-size: 22px;
+    font-weight: 700;
+  }
+
+  .modal-stat-label {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 2px;
+  }
+
+  .detail-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+
+  .detail-table thead th {
+    text-align: left;
+    color: var(--text-muted);
+    font-weight: 500;
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding: 8px 12px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg-card);
+  }
+
+  .detail-table tbody td {
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text);
+    vertical-align: top;
+  }
+
+  .detail-table tbody tr:hover { background: rgba(255,255,255,0.03); }
+
+  .detail-date {
+    font-weight: 600;
+    white-space: nowrap;
+    color: var(--accent-light);
+  }
+
+  .detail-project {
+    font-weight: 500;
+    color: var(--cyan);
+  }
+
+  .detail-desc {
+    color: var(--text-muted);
+    max-width: 300px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .detail-hours {
+    text-align: right;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .date-group-header td {
+    background: rgba(99,102,241,0.06);
+    font-weight: 600;
+    color: var(--accent-light);
+    font-size: 12px;
+    padding: 6px 12px;
+  }
+
+  .emp-name.clickable { cursor: pointer; transition: color 0.15s; }
+  .emp-name.clickable:hover { color: var(--accent-light); }
+  .weekly-table td.clickable-name { cursor: pointer; transition: color 0.15s; }
+  .weekly-table td.clickable-name:hover { color: var(--accent-light); }
+
 </style>
 </head>
 <body>
@@ -621,9 +787,23 @@
 
 <div class="tooltip" id="tooltip"></div>
 
+
+<div class="modal-overlay" id="modalOverlay" onclick="if(event.target===this)closeModal()">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div>
+        <h2 id="modalTitle">Détails Timesheet</h2>
+        <div class="modal-subtitle" id="modalSubtitle"></div>
+      </div>
+      <button class="modal-close" onclick="closeModal()">&times;</button>
+    </div>
+    <div class="modal-body" id="modalBody"></div>
+  </div>
+</div>
+
 <script>
 // ===== DATA =====
-const DATA = {"generated": "2026-04-13T21:34:42.676194", "target_pct": 80, "weekly_hours": 38, "target_weekly_hours": 6.08, "weeks": ["2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12", "2026-W13", "2026-W14", "2026-W15", "2026-W16"], "teams": {"Support": {"members": {"Loic De Donder": {"id": 2, "weekly": {"2026-W01": 9.0, "2026-W02": 14.75, "2026-W03": 6.75, "2026-W04": 7.25, "2026-W05": 7.25, "2026-W06": 17.42, "2026-W07": 12.25, "2026-W08": 11.5, "2026-W09": 15.0, "2026-W10": 14.75, "2026-W11": 13.0, "2026-W12": 5.5, "2026-W13": 3.12, "2026-W14": 13.02, "2026-W15": 12.75, "2026-W16": 0.75}, "current_week_daily": {"2026-04-13": 0.75}}, "David Moise": {"id": 45, "weekly": {"2026-W01": 11.58, "2026-W02": 19.85, "2026-W03": 39.92, "2026-W04": 27.92, "2026-W05": 22.83, "2026-W06": 23.92, "2026-W07": 27.08, "2026-W08": 29.17, "2026-W09": 28.92, "2026-W10": 20.83, "2026-W11": 20.25, "2026-W12": 12.33, "2026-W13": 20.5, "2026-W14": 36.25, "2026-W15": 28.02, "2026-W16": 3.55}, "current_week_daily": {"2026-04-13": 3.55}}, "Nicolas Tatti": {"id": 38, "weekly": {"2026-W01": 13.42, "2026-W02": 19.08, "2026-W03": 31.75, "2026-W04": 23.08, "2026-W05": 21.58, "2026-W06": 25.58, "2026-W07": 36.58, "2026-W08": 24.0, "2026-W09": 35.25, "2026-W10": 29.75, "2026-W11": 19.92, "2026-W12": 22.92, "2026-W13": 34.75, "2026-W14": 29.09, "2026-W15": 33.5, "2026-W16": 5.92}, "current_week_daily": {"2026-04-13": 5.92}}, "Nicolas Pierot": {"id": 49, "weekly": {"2026-W01": 0, "2026-W02": 0, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0, "2026-W09": 0, "2026-W10": 0, "2026-W11": 0, "2026-W12": 0, "2026-W13": 0, "2026-W14": 0, "2026-W15": 8.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}}, "Julia Pasquier": {"id": 25, "weekly": {"2026-W01": 14.0, "2026-W02": 50.83, "2026-W03": 46.58, "2026-W04": 33.58, "2026-W05": 36.92, "2026-W06": 43.58, "2026-W07": 48.75, "2026-W08": 42.67, "2026-W09": 39.0, "2026-W10": 42.33, "2026-W11": 25.67, "2026-W12": 39.75, "2026-W13": 45.25, "2026-W14": 43.0, "2026-W15": 42.0, "2026-W16": 5.58}, "current_week_daily": {"2026-04-13": 5.58}}, "Hendrik Rouvroy": {"id": 16, "weekly": {"2026-W01": 14.0, "2026-W02": 38.0, "2026-W03": 24.25, "2026-W04": 21.75, "2026-W05": 38.0, "2026-W06": 38.0, "2026-W07": 38.0, "2026-W08": 38.0, "2026-W09": 38.0, "2026-W10": 19.5, "2026-W11": 16.5, "2026-W12": 17.17, "2026-W13": 11.75, "2026-W14": 22.0, "2026-W15": 38.0, "2026-W16": 2.5}, "current_week_daily": {"2026-04-13": 2.5}}, "Hugo Clavinas": {"id": 31, "weekly": {"2026-W01": 14.0, "2026-W02": 7.75, "2026-W03": 20.75, "2026-W04": 21.5, "2026-W05": 16.75, "2026-W06": 8.0, "2026-W07": 2.5, "2026-W08": 19.5, "2026-W09": 25.5, "2026-W10": 23.25, "2026-W11": 4.0, "2026-W12": 47.0, "2026-W13": 11.5, "2026-W14": 16.75, "2026-W15": 14.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}}, "Robin Duez": {"id": 19, "weekly": {"2026-W01": 14.67, "2026-W02": 75.75, "2026-W03": 40.92, "2026-W04": 43.0, "2026-W05": 38.75, "2026-W06": 45.58, "2026-W07": 42.83, "2026-W08": 45.08, "2026-W09": 48.75, "2026-W10": 40.83, "2026-W11": 38.25, "2026-W12": 44.5, "2026-W13": 40.42, "2026-W14": 39.58, "2026-W15": 45.53, "2026-W16": 8.67}, "current_week_daily": {"2026-04-13": 8.67}}}}, "Installation": {"members": {"Guillaume Barbier": {"id": 3, "weekly": {"2026-W01": 14.0, "2026-W02": 11.83, "2026-W03": 11.0, "2026-W04": 6.33, "2026-W05": 9.17, "2026-W06": 21.58, "2026-W07": 11.42, "2026-W08": 16.25, "2026-W09": 9.92, "2026-W10": 24.75, "2026-W11": 18.92, "2026-W12": 9.42, "2026-W13": 9.58, "2026-W14": 17.12, "2026-W15": 27.42, "2026-W16": 7.75}, "current_week_daily": {"2026-04-13": 7.75}}, "Jean-Christophe Lienard": {"id": 17, "weekly": {"2026-W01": 12.0, "2026-W02": 6.0, "2026-W03": 19.0, "2026-W04": 19.0, "2026-W05": 12.25, "2026-W06": 8.0, "2026-W07": 6.0, "2026-W08": 5.25, "2026-W09": 10.0, "2026-W10": 8.5, "2026-W11": 36.0, "2026-W12": 18.0, "2026-W13": 16.0, "2026-W14": 4.5, "2026-W15": 10.25, "2026-W16": 8.0}, "current_week_daily": {"2026-04-13": 8.0}}, "Jonathan Wouters": {"id": 46, "weekly": {"2026-W01": 14.0, "2026-W02": 8.0, "2026-W03": 19.0, "2026-W04": 18.92, "2026-W05": 23.17, "2026-W06": 19.25, "2026-W07": 24.58, "2026-W08": 24.42, "2026-W09": 23.25, "2026-W10": 22.33, "2026-W11": 18.25, "2026-W12": 22.75, "2026-W13": 16.42, "2026-W14": 24.0, "2026-W15": 37.25, "2026-W16": 8.0}, "current_week_daily": {"2026-04-13": 8.0}}, "Kevin Santos": {"id": 12, "weekly": {"2026-W01": 14.5, "2026-W02": 4.5, "2026-W03": 8.5, "2026-W04": 8.5, "2026-W05": 10.5, "2026-W06": 6.75, "2026-W07": 18.25, "2026-W08": 3.33, "2026-W09": 10.5, "2026-W10": 16.0, "2026-W11": 17.0, "2026-W12": 4.5, "2026-W13": 16.5, "2026-W14": 10.79, "2026-W15": 20.75, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}}, "Sébastien Jacquet": {"id": 24, "weekly": {"2026-W01": 8.25, "2026-W02": 16.58, "2026-W03": 1.75, "2026-W04": 3.0, "2026-W05": 7.5, "2026-W06": 0.5, "2026-W07": 8.5, "2026-W08": 11.25, "2026-W09": 5.75, "2026-W10": 13.25, "2026-W11": 13.25, "2026-W12": 9.0, "2026-W13": 6.42, "2026-W14": 15.75, "2026-W15": 22.67, "2026-W16": 4.25}, "current_week_daily": {"2026-04-13": 4.25}}, "Pierre de Meester": {"id": 48, "weekly": {"2026-W01": 0, "2026-W02": 0, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0.75, "2026-W09": 1.75, "2026-W10": 0.5, "2026-W11": 0.75, "2026-W12": 1.0, "2026-W13": 1.25, "2026-W14": 8.0, "2026-W15": 9.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}}}}, "Administration": {"members": {"Audrey Lêveque": {"id": 15, "weekly": {"2026-W01": 7.6, "2026-W02": 3.8, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 30.4, "2026-W09": 0, "2026-W10": 0, "2026-W11": 0, "2026-W12": 0, "2026-W13": 0, "2026-W14": 0.09, "2026-W15": 9.6, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}}, "Charlotte Gallez": {"id": 47, "weekly": {"2026-W01": 14.0, "2026-W02": 0, "2026-W03": 6.0, "2026-W04": 0, "2026-W05": 14.0, "2026-W06": 8.0, "2026-W07": 0, "2026-W08": 8.0, "2026-W09": 16.0, "2026-W10": 8.0, "2026-W11": 4.0, "2026-W12": 12.0, "2026-W13": 0, "2026-W14": 14.04, "2026-W15": 8.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}}, "Olivia Claus": {"id": 33, "weekly": {"2026-W01": 8.0, "2026-W02": 0, "2026-W03": 14.4, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0, "2026-W09": 0, "2026-W10": 0, "2026-W11": 0, "2026-W12": 0, "2026-W13": 0, "2026-W14": 0, "2026-W15": 30.4, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}}}}}};
+const DATA = {"generated": "2026-04-13T21:49:10.560287", "target_pct": 80, "weekly_hours": 38, "target_weekly_hours": 6.08, "weeks": ["2026-W01", "2026-W02", "2026-W03", "2026-W04", "2026-W05", "2026-W06", "2026-W07", "2026-W08", "2026-W09", "2026-W10", "2026-W11", "2026-W12", "2026-W13", "2026-W14", "2026-W15", "2026-W16"], "teams": {"Support": {"members": {"Loic De Donder": {"id": 2, "weekly": {"2026-W01": 9.0, "2026-W02": 14.75, "2026-W03": 6.75, "2026-W04": 7.25, "2026-W05": 7.25, "2026-W06": 17.42, "2026-W07": 12.25, "2026-W08": 11.5, "2026-W09": 15.0, "2026-W10": 14.75, "2026-W11": 13.0, "2026-W12": 5.5, "2026-W13": 3.12, "2026-W14": 13.02, "2026-W15": 12.75, "2026-W16": 0.75}, "current_week_daily": {"2026-04-13": 0.75}, "details": [{"date": "2026-04-13", "project": "S04485 - [POS_fact] Configuration module facturation automatique", "description": "configuration du module facturation manque le logo demandé par mail au client", "hours": 0.5}, {"date": "2026-04-13", "project": "S04703 installation caisse + pocket", "description": "envoie mail demande info pour config module", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support urbanpos", "description": "convertis en lead", "hours": 0}]}, "David Moise": {"id": 45, "weekly": {"2026-W01": 11.58, "2026-W02": 19.85, "2026-W03": 39.92, "2026-W04": 27.92, "2026-W05": 22.83, "2026-W06": 23.92, "2026-W07": 27.08, "2026-W08": 29.17, "2026-W09": 28.92, "2026-W10": 20.83, "2026-W11": 20.25, "2026-W12": 12.33, "2026-W13": 20.5, "2026-W14": 36.25, "2026-W15": 28.02, "2026-W16": 3.55}, "current_week_daily": {"2026-04-13": 3.55}, "details": [{"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "client bloquer compta RMAX - j'ai TFT a compta RMAX", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "fixer mac adresse dans le router =ok", "hours": 0.58}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Analyse problème encaissement espèces. Vérification des paramètres de caisse et correction effectuée. Fonctionnement normal rétabli pour le client.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "relance APP =ok", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Ouverture de l'application de réservation pour le client reset synd date = ok . Vérification des paramètres de configuration et validation du bon fonctionnement", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Écoute du message vocal du client concernant problème d'imprimante. Suivi à effectuer pour prise en charge du dossier.", "hours": 0.01}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "call client - me dit que une pocket ne captais pas le wifi a une certaine distance --> voir si c'est le CS50 ou sumni - client rappel mardi pour voir", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "configuration avec le client d'un acces au back office", "hours": 0.42}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Analyse demande de visualisation des sorties d'argent. Explication des étapes d'accès via back office. Configuration des sorties sur ticket Z revue et clarifiée.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Analyse des limitations de la tablette. Explication de la charge à 60% pour protection de la batterie. explication au client que c'est la protection de la batterie", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support VIP", "description": "client demande les acces pour sont back office = demande au client d'envoyer un mail", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support VIP", "description": "Analyse des produits non appliqués dans le système. Transmission du dossier à l'équipe de paramétrage pour régularisation et suivi avec le client.", "hours": 0.04}, {"date": "2026-04-13", "project": "Service Support VIP", "description": "reboot APP = ok", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support VIP", "description": "lient voudrai que les commande sur le C&C soit dispo de 14h jusque 9h45 le lendemain voir avec SPA", "hours": 0.25}]}, "Nicolas Tatti": {"id": 38, "weekly": {"2026-W01": 13.42, "2026-W02": 19.08, "2026-W03": 31.75, "2026-W04": 23.08, "2026-W05": 21.58, "2026-W06": 25.58, "2026-W07": 36.58, "2026-W08": 24.0, "2026-W09": 35.25, "2026-W10": 29.75, "2026-W11": 19.92, "2026-W12": 22.92, "2026-W13": 34.75, "2026-W14": 29.09, "2026-W15": 33.5, "2026-W16": 5.92}, "current_week_daily": {"2026-04-13": 5.92}, "details": [{"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "écoute de la demande => licence déjà débloquée par RMX = CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "Transfert compta restomax = CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "écoute de la demande => licence déjà débloquée par RMX => demande de relancer l'app = CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "écoute de la demande => le client a payé entre temps => redémarrage de l'app => c'est en ordre", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel du client pour lui dire que sa demande a été transféré à RMX et que c'est en cours", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "appel du client => activation du transfert automatique de commande => CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Analyse des configurations de la caisse. Identification du problème de connexion au réseau. Proposition d'assistance via appel vidéo sur WhatsApp pour suivi => boucle dans le réseau => câble lan branché <=> notre routeur et le proximus en + du WAN <-> LAN => reconfig du routeur = DONE A FACTURER", "hours": 1.33}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Rappel de la client => tout fonctionne correctement = CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel du client => ils ne sont pas sur place => EN ATTENTE CLIENT", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel de la cliente => ajout du numéro de téléphone sur le ticket de caisse = CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Tentative d'appel sans réponse => message vocal laissé", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel du client => activation de l'option \"customername\" sur les 3 bornes = CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel du client => l'option était déjà activée = CLOTURE", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Le restaurant \"chez Lorette\" à Namur a rencontré des problèmes avec l'imprimante après un remplacement mal configuré, entraînant des erreurs d'impression de tickets. L'intervenant a suggéré une configuration correcte des imprimantes pour s'assurer que les tickets sortent des bonnes imprimantes en fonction de la tablette utilisée. Bien que les tickets d'addition sortent correctement, des préoccupations subsistent quant à la sortie des tickets de préparation, nécessitant des tests supplémentaires. Il a été convenu que l'intervenant fera des tests en interne pour résoudre le problème et rappellera pour organiser un rendez-vous sur place si nécessaire. Un point important discuté était la lisibilité des tickets de cuisine et la nécessité d'améliorations dans le système actuel.", "hours": 1.33}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel du client => le client souhaite savoir si il doit changer ses taux de TVA sur les softs => il ne faut plus les changer => le client souhaite également une offre pour un nouveau système de caisse = CLOTURE", "hours": 0.25}]}, "Nicolas Pierot": {"id": 49, "weekly": {"2026-W01": 0, "2026-W02": 0, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0, "2026-W09": 0, "2026-W10": 0, "2026-W11": 0, "2026-W12": 0, "2026-W13": 0, "2026-W14": 0, "2026-W15": 8.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}, "details": []}, "Julia Pasquier": {"id": 25, "weekly": {"2026-W01": 14.0, "2026-W02": 50.83, "2026-W03": 46.58, "2026-W04": 33.58, "2026-W05": 36.92, "2026-W06": 43.58, "2026-W07": 48.75, "2026-W08": 42.67, "2026-W09": 39.0, "2026-W10": 42.33, "2026-W11": 25.67, "2026-W12": 39.75, "2026-W13": 45.25, "2026-W14": 43.0, "2026-W15": 42.0, "2026-W16": 5.58}, "current_week_daily": {"2026-04-13": 5.58}, "details": [{"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "appel avec le client pour ajouter le mode de paiement par EFT, en revanche je me suis rendu compte que celui-ci est bloqué compta restomax", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "écoute du pb - le client doit 1378,09€ mais celui-ci indique avoir déjà payé et refuse de payer quoi que ce soit ce soir > si pas de paiement > pas de déblocage", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "Caisse bloqué compta restomax -> j'ai transmis le numéro", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Installation Boite Noire", "description": "le client a reçu carte et code - rdv 9h - 14/04", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel avec le client  pour savoir quoi - orange est venu ce matin c'est en ordre", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "j'ai demandé quoi à Séb - en ordre", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Demande à Julien si il a eu un retour depuis la semaine passée", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "écoute du pb - analyse en prenant le control + vidéo - réseau très lent - proximus passe demain pour améliorer celui-ci -> je rappellerai le client par la suite pour suivi", "hours": 0.5}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "écoute du pb - analyse dans le bow - en effet il y a une erreur car si l'on calcul manuellement cela ne correspond pas au solde restant indiqué dans le bow -> demande à restomax", "hours": 0.58}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Tentative d'appel pour savoir si tout est fonctionnel ce jour - sans réponse - message vocal laissé", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "mail en réponse au client", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "écoute", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "écoute de la demande - la cliente avait des questions à propos du pointage des employés - explications donnés", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "écoute de la demande - ajout et modification de prix comme demandé", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support VIP", "description": "demande + d'infos à Sandro", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support VIP", "description": "écoute du pb - analyse en vidéo - routeur omada déconnecté - celui-ci était branché a un switch, j'ai demandé au client de brancher ce câble en direct sur proximus - en ordre", "hours": 0.75}, {"date": "2026-04-13", "project": "Service Support VIP", "description": "Modification effectué - en ordre", "hours": 0.25}, {"date": "2026-04-13", "project": "Service de réparation", "description": "La cliente a rappeler pour savoir où cela en ai et celle-ci demande le numéro du fournisseur -> Transfert à Hendrik", "hours": 0.25}]}, "Hendrik Rouvroy": {"id": 16, "weekly": {"2026-W01": 14.0, "2026-W02": 38.0, "2026-W03": 24.25, "2026-W04": 21.75, "2026-W05": 38.0, "2026-W06": 38.0, "2026-W07": 38.0, "2026-W08": 38.0, "2026-W09": 38.0, "2026-W10": 19.5, "2026-W11": 16.5, "2026-W12": 17.17, "2026-W13": 11.75, "2026-W14": 22.0, "2026-W15": 38.0, "2026-W16": 2.5}, "current_week_daily": {"2026-04-13": 2.5}, "details": [{"date": "2026-04-13", "project": "S04909 - Changement de société", "description": "Changement de société. Mail envoyé au client pour qu'il s'inscrive sur lapplication en ligne pour la fdm 2.0", "hours": 1.0}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Le client à été contacté, la maj faite. Nous en avons profité pour faire des modifications sur le click and collect. Entre autre au niveau du layout des propositions sur pizza.", "hours": 0.5}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel planifié avec le client en apres midi, a priori la maj à résolu le problème.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Le client à déjà trouvé par lui même.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Message laissé sur répondeur", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support urbanpos", "description": "Devis envoyé", "hours": 0.25}]}, "Hugo Clavinas": {"id": 31, "weekly": {"2026-W01": 14.0, "2026-W02": 7.75, "2026-W03": 20.75, "2026-W04": 21.5, "2026-W05": 16.75, "2026-W06": 8.0, "2026-W07": 2.5, "2026-W08": 19.5, "2026-W09": 25.5, "2026-W10": 23.25, "2026-W11": 4.0, "2026-W12": 47.0, "2026-W13": 11.5, "2026-W14": 16.75, "2026-W15": 14.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}, "details": []}, "Robin Duez": {"id": 19, "weekly": {"2026-W01": 14.67, "2026-W02": 75.75, "2026-W03": 40.92, "2026-W04": 43.0, "2026-W05": 38.75, "2026-W06": 45.58, "2026-W07": 42.83, "2026-W08": 45.08, "2026-W09": 48.75, "2026-W10": 40.83, "2026-W11": 38.25, "2026-W12": 44.5, "2026-W13": 40.42, "2026-W14": 39.58, "2026-W15": 45.53, "2026-W16": 8.67}, "current_week_daily": {"2026-04-13": 8.67}, "details": [{"date": "2026-04-13", "project": "S04619 - Installation standard", "description": "Appel du client, il dit qu'il n'a pas de retour concernant l'installation, demande à Sébastien de contacter le client.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "Appel de la cliente, Licence bloquée pour non paiement restomax.  Numéro de la comptabilité restomax donné à la cliente.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "Appel avec le client, Licence bloquée pour non paiement restomax. J'ai donné le numéro de la comptabilité restomax.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "Appel du client, Licence bloquée pour non paiement restomax J'ai donné le numéro de la comptabilité restomax.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Admin / Comptabilité", "description": "Vu sur le backoffice , le client n'est plus bloqué compta.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Installation Boite Noire", "description": "Mail envoyé à la cliente , tout est bon.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Installation Boite Noire", "description": "Activation faite, tout les points concernant les modifications ont été dit. Tout est bon activation faite sans problème", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Tentative d'appel pas de réponse. Expliquant qu'un technicien va sur place vers 9h message vocal laissé.", "hours": 0}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel avec la personne sur place, Donc le moxa sur la caisse qui fonctionne est configuré en DHCP. Et on pense que les autres moxas sont en Statique .", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Discuter en interne avec Alex et Loic . On peut que les moxas soient en adresses IP fixe. et que le gestionnaire à fixé les adresses IP grâce aux adresses MAC . Tentative d'appel avec la personne sur place. pas de réponse.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Vu en interne et vu avec le client. On aurait un technicien disponible demain vers 11h30 / 12h. Sauf que le client voudrait qu'on vienne avant le service. On est en en interne", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Rappelle avec la cliente, après que le routeur ait redémarré . On a refait le test. Sur restomax, on ne trouve pas les appareils via le discover. Sauf que dans wifiman on les trouvent. Il faudrait qu'on aille intervenir sur place et que le gestionnaire réseau soit disponible.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel de la cliente, Balances ne reçoivent pas les infos envoyées depuis restomax. On a changé les adresses IP des moxas car il y a eu une coupure de courant. Et beaucoup d'adresses IP ont changées.  On a eu contact avec le gestionnaire réseau .  ON VA redémarrer le routeur vers 14h05. On trouve les adresses IP des appareils sur wifiman, Mais sur restomax on ne les trouvent pas dans discover. Ni sur une page internet.", "hours": 1.5}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel de la cliente, il y a toujours des soucis. Ticket ne sort pas. Tirroir caisse ne s'ouvre pas, etc . J'ai du renvoyé un mail au gestionnaire réseau. En attente de leur retour.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Appel de la cliente, Imprimante cuisine ne sort aucun ticket. Guillaume va demain sur place ,j'ai demandé qu'il prenne 2 imprimantes en plus neuve. Pos 80d. Actuellement les sorties imprimantes pour la tablette FT. Tout sort sur l'imprimante addition 172.29.29.150 . J'ai du reconfiguré l'imprimante qui servait pour l'addition : pas de masque de sous réseau ni le bon gateway. Test effectué tout est bon . Guillaume va demain je lui ai fait un message. Je clos.", "hours": 0.67}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Mail envoyé au client expliquant les différents points qu'il doit voir avec le gestionnaire réseau.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Plus d'appel du client, je clos . Le client devait nous appeler si ça se reproduisait.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Je cloture ce ticket . Il n'y a plus eu de soucis par rapport à ça.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Incident", "description": "Vu avec Loic et le client. On a de la place aujourd'hui vers 13h30 /14h. Le client a accepté, j'ai dis que : l'intervention, le déplacement et si il y a du matériel en plus , ce sera facturé.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Vu en interne , avec Pierre il existe plusieurs modèles. J'ai demandé au client si il n'avait aucune clé . Car il y a différents numéros sur les clés.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Tentative d'appel , pas de réponse. message vocal pour savoir si l'encaissement en chèque repas fonctionne.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Extraction des chiffres d'affaires pour janvier, février et mars. Envoi par mail des informations requises au client pour son comptable. Les mails ont bien été envoyés", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel du client, Question réimpression ticket sans prix. Le client travaille avec restomax classique dans un autre établissement. Sur restomax classique il pouvait réimprimer un ticket tva boite noire. Sans détails. Sur restomax APP on peut peut pas faire cette opération. J'ai demandé à un collègue.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Tentative d'appel pas de réponse. message vocal laissé.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel du client, Achat double de clé tirroir caisse. Le client va envoyer la photo de la serrure et du tirroir caisse sur whatsapp.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel de la cliente , Question resortir un rapport Z journalier. Il faut rappeler la cliente après 14h", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Appel avec le client, il va aller à son établissement maintenant et tester. il nous tiendra au courant.", "hours": 0.25}, {"date": "2026-04-13", "project": "Service Support Requête", "description": "Un message whatsapp avait été fait au client mardi passé . on avait activé l'option : sauvegarde des rapports Z Mi janvier On peut pas avoir les rapports avant cette date. JE cloture ce ticket pour l'instant.", "hours": 0.25}, {"date": "2026-04-13", "project": "Suivis Développement RESTROMAX", "description": "Restomax a répondu la semaine passée , la correction prendra du temps à être corrigée, mais les développeurs sont au courant.", "hours": 0.25}]}}}, "Installation": {"members": {"Guillaume Barbier": {"id": 3, "weekly": {"2026-W01": 14.0, "2026-W02": 11.83, "2026-W03": 11.0, "2026-W04": 6.33, "2026-W05": 9.17, "2026-W06": 21.58, "2026-W07": 11.42, "2026-W08": 16.25, "2026-W09": 9.92, "2026-W10": 24.75, "2026-W11": 18.92, "2026-W12": 9.42, "2026-W13": 9.58, "2026-W14": 17.12, "2026-W15": 27.42, "2026-W16": 7.75}, "current_week_daily": {"2026-04-13": 7.75}, "details": [{"date": "2026-04-13", "project": "EQUIPE INSTALLATION", "description": "Aide Hugo", "hours": 0.5}, {"date": "2026-04-13", "project": "EQUIPE INSTALLATION", "description": "Réponse au question de sco pour probleme connexion avec A35", "hours": 0.5}, {"date": "2026-04-13", "project": "S02989 - Configuration et déploiement Click&Collect", "description": "Appel client pour onbording", "hours": 0.25}, {"date": "2026-04-13", "project": "S04449 - Installation caisse", "description": "Appel de Alexia pour réponse a son mail", "hours": 0.25}, {"date": "2026-04-13", "project": "S04615 - Installation standard", "description": "Appel pour suivi de projet, pas de réponse, j'ai laissé un message vocal", "hours": 0.25}, {"date": "2026-04-13", "project": "S05139 installation  caisse + borne", "description": "trajet", "hours": 1.0}, {"date": "2026-04-13", "project": "S05139 installation  caisse + borne", "description": "Installation avec test des commande, les tpe et le monnayeur ne sont pas encore branché car pas sur site", "hours": 2.0}, {"date": "2026-04-13", "project": "S05139 installation  caisse + borne", "description": "Installation des deux kiosk supplémentaire", "hours": 0.5}, {"date": "2026-04-13", "project": "S05139 installation  caisse + borne", "description": "Installation kiosk", "hours": 1.0}, {"date": "2026-04-13", "project": "S05139 installation  caisse + borne", "description": "Installation kitchen + test du flux", "hours": 1.0}, {"date": "2026-04-13", "project": "S05155", "description": "Vérification fichier excel avant import", "hours": 0.5}]}, "Jean-Christophe Lienard": {"id": 17, "weekly": {"2026-W01": 12.0, "2026-W02": 6.0, "2026-W03": 19.0, "2026-W04": 19.0, "2026-W05": 12.25, "2026-W06": 8.0, "2026-W07": 6.0, "2026-W08": 5.25, "2026-W09": 10.0, "2026-W10": 8.5, "2026-W11": 36.0, "2026-W12": 18.0, "2026-W13": 16.0, "2026-W14": 4.5, "2026-W15": 10.25, "2026-W16": 8.0}, "current_week_daily": {"2026-04-13": 8.0}, "details": [{"date": "2026-04-13", "project": "S05055 INSTALLATION CAISSE STANDARD", "description": "install + modification + placement materiel soucis avec le reseau voir avec SCO", "hours": 6.0}, {"date": "2026-04-13", "project": "S05055 INSTALLATION CAISSE STANDARD", "description": "Modification des articlers en direct chez le client", "hours": 2.0}]}, "Jonathan Wouters": {"id": 46, "weekly": {"2026-W01": 14.0, "2026-W02": 8.0, "2026-W03": 19.0, "2026-W04": 18.92, "2026-W05": 23.17, "2026-W06": 19.25, "2026-W07": 24.58, "2026-W08": 24.42, "2026-W09": 23.25, "2026-W10": 22.33, "2026-W11": 18.25, "2026-W12": 22.75, "2026-W13": 16.42, "2026-W14": 24.0, "2026-W15": 37.25, "2026-W16": 8.0}, "current_week_daily": {"2026-04-13": 8.0}, "details": [{"date": "2026-04-13", "project": "EQUIPE INSTALLATION", "description": "/", "hours": 0.5}, {"date": "2026-04-13", "project": "S02722 - Installation caisse & borne", "description": "Suivi installation", "hours": 0.5}, {"date": "2026-04-13", "project": "S03407 - Institut St Joseph - Charleroi", "description": "Suivi sur site, rappel ticket z", "hours": 1.0}, {"date": "2026-04-13", "project": "S04195 - Installation standard", "description": "Installation et formation", "hours": 4.0}, {"date": "2026-04-13", "project": "S05099 installation caisse standard", "description": "/", "hours": 2.0}]}, "Kevin Santos": {"id": 12, "weekly": {"2026-W01": 14.5, "2026-W02": 4.5, "2026-W03": 8.5, "2026-W04": 8.5, "2026-W05": 10.5, "2026-W06": 6.75, "2026-W07": 18.25, "2026-W08": 3.33, "2026-W09": 10.5, "2026-W10": 16.0, "2026-W11": 17.0, "2026-W12": 4.5, "2026-W13": 16.5, "2026-W14": 10.79, "2026-W15": 20.75, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}, "details": []}, "Sébastien Jacquet": {"id": 24, "weekly": {"2026-W01": 8.25, "2026-W02": 16.58, "2026-W03": 1.75, "2026-W04": 3.0, "2026-W05": 7.5, "2026-W06": 0.5, "2026-W07": 8.5, "2026-W08": 11.25, "2026-W09": 5.75, "2026-W10": 13.25, "2026-W11": 13.25, "2026-W12": 9.0, "2026-W13": 6.42, "2026-W14": 15.75, "2026-W15": 22.67, "2026-W16": 4.25}, "current_week_daily": {"2026-04-13": 4.25}, "details": [{"date": "2026-04-13", "project": "S05139 installation  caisse + borne", "description": "trajet", "hours": 1.0}, {"date": "2026-04-13", "project": "S05139 installation  caisse + borne", "description": "installation", "hours": 3.25}]}, "Pierre de Meester": {"id": 48, "weekly": {"2026-W01": 0, "2026-W02": 0, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0.75, "2026-W09": 1.75, "2026-W10": 0.5, "2026-W11": 0.75, "2026-W12": 1.0, "2026-W13": 1.25, "2026-W14": 8.0, "2026-W15": 9.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}, "details": []}}}, "Administration": {"members": {"Audrey Lêveque": {"id": 15, "weekly": {"2026-W01": 7.6, "2026-W02": 3.8, "2026-W03": 0, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 30.4, "2026-W09": 0, "2026-W10": 0, "2026-W11": 0, "2026-W12": 0, "2026-W13": 0, "2026-W14": 0.09, "2026-W15": 9.6, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}, "details": []}, "Charlotte Gallez": {"id": 47, "weekly": {"2026-W01": 14.0, "2026-W02": 0, "2026-W03": 6.0, "2026-W04": 0, "2026-W05": 14.0, "2026-W06": 8.0, "2026-W07": 0, "2026-W08": 8.0, "2026-W09": 16.0, "2026-W10": 8.0, "2026-W11": 4.0, "2026-W12": 12.0, "2026-W13": 0, "2026-W14": 14.04, "2026-W15": 8.0, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}, "details": []}, "Olivia Claus": {"id": 33, "weekly": {"2026-W01": 8.0, "2026-W02": 0, "2026-W03": 14.4, "2026-W04": 0, "2026-W05": 0, "2026-W06": 0, "2026-W07": 0, "2026-W08": 0, "2026-W09": 0, "2026-W10": 0, "2026-W11": 0, "2026-W12": 0, "2026-W13": 0, "2026-W14": 0, "2026-W15": 30.4, "2026-W16": 0}, "current_week_daily": {"2026-04-13": 0}, "details": []}}}}};
 
 const TARGET_PCT = DATA.target_pct;
 const TARGET_HOURS = DATA.target_weekly_hours;
@@ -795,7 +975,7 @@ function renderTeamCard(teamName, containerId, detailed) {
     html += `
       <tr class="emp-row">
         <td>
-          <div class="emp-name">
+          <div class="emp-name clickable" onclick="openModal('${m.name}')">
             <div class="emp-avatar" style="background:${colors[idx % colors.length]}">${initials(m.name)}</div>
             ${m.name.split(' ')[0]}
           </div>
@@ -1188,6 +1368,91 @@ function setView(view) {
     renderWeeklyTable();
   }
 }
+
+
+// ===== MODAL DETAIL =====
+const DAY_NAMES_FULL = ['Dimanche','Lundi','Mardi','Mercredi','Jeudi','Vendredi','Samedi'];
+const MONTH_NAMES = ['janvier','février','mars','avril','mai','juin','juillet','août','septembre','octobre','novembre','décembre'];
+
+function formatDateFr(dateStr) {
+  const d = new Date(dateStr + 'T00:00:00');
+  return DAY_NAMES_FULL[d.getDay()] + ' ' + d.getDate() + ' ' + MONTH_NAMES[d.getMonth()];
+}
+
+function openModal(memberName) {
+  // Find the member in DATA
+  let member = null;
+  let teamName = '';
+  for (const [tName, team] of Object.entries(DATA.teams)) {
+    if (team.members[memberName]) {
+      member = team.members[memberName];
+      teamName = tName;
+      break;
+    }
+  }
+  if (!member) return;
+
+  const details = member.details || [];
+  const currentHours = member.weekly[CURRENT_WEEK] || 0;
+  const pct = (currentHours / WEEKLY_HOURS) * 100;
+  const totalEntries = details.length;
+
+  document.getElementById('modalTitle').textContent = memberName;
+  document.getElementById('modalSubtitle').textContent = 'Team ' + teamName + ' — Semaine ' + CURRENT_WEEK;
+
+  // Group by date
+  const byDate = {};
+  let totalDetailHours = 0;
+  details.forEach(d => {
+    if (!byDate[d.date]) byDate[d.date] = [];
+    byDate[d.date].push(d);
+    totalDetailHours += d.hours;
+  });
+  const dates = Object.keys(byDate).sort();
+
+  // Count unique projects
+  const projects = new Set(details.map(d => d.project));
+
+  let bodyHtml = '<div class="modal-summary">';
+  bodyHtml += '<div class="modal-stat"><div class="modal-stat-value" style="color:' + getColorHex(pct) + '">' + currentHours.toFixed(1) + 'h</div><div class="modal-stat-label">Heures cette semaine</div></div>';
+  bodyHtml += '<div class="modal-stat"><div class="modal-stat-value" style="color:var(--cyan)">' + totalEntries + '</div><div class="modal-stat-label">Lignes de timesheet</div></div>';
+  bodyHtml += '<div class="modal-stat"><div class="modal-stat-value" style="color:var(--purple)">' + projects.size + '</div><div class="modal-stat-label">Projets</div></div>';
+  bodyHtml += '</div>';
+
+  if (details.length === 0) {
+    bodyHtml += '<div style="text-align:center; padding:40px; color:var(--text-muted)">Aucune entrée de timesheet pour cette semaine</div>';
+  } else {
+    bodyHtml += '<table class="detail-table"><thead><tr><th>Date</th><th>Projet</th><th>Description</th><th style="text-align:right">Heures</th></tr></thead><tbody>';
+
+    dates.forEach(date => {
+      const entries = byDate[date];
+      const dayTotal = entries.reduce((s, e) => s + e.hours, 0);
+      bodyHtml += '<tr class="date-group-header"><td colspan="3">' + formatDateFr(date) + '</td><td style="text-align:right; font-weight:700; color:var(--accent-light)">' + dayTotal.toFixed(2) + 'h</td></tr>';
+      entries.forEach(e => {
+        bodyHtml += '<tr>';
+        bodyHtml += '<td></td>';
+        bodyHtml += '<td class="detail-project">' + e.project + '</td>';
+        bodyHtml += '<td class="detail-desc" title="' + (e.description || '').replace(/"/g, '&quot;') + '">' + (e.description || '<em style=\'color:var(--text-muted)\'>—</em>') + '</td>';
+        bodyHtml += '<td class="detail-hours">' + e.hours.toFixed(2) + 'h</td>';
+        bodyHtml += '</tr>';
+      });
+    });
+
+    bodyHtml += '<tr style="border-top:2px solid var(--border)"><td colspan="3" style="font-weight:700; padding-top:12px">Total</td><td class="detail-hours" style="font-size:15px; padding-top:12px; color:' + getColorHex(pct) + '">' + totalDetailHours.toFixed(2) + 'h</td></tr>';
+    bodyHtml += '</tbody></table>';
+  }
+
+  document.getElementById('modalBody').innerHTML = bodyHtml;
+  document.getElementById('modalOverlay').classList.add('active');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 // ===== INIT =====
 function init() {
