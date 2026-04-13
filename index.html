@@ -1313,7 +1313,7 @@ function renderWeeklyTable() {
 
       html += `
         <tr>
-          <td>${name}</td>
+          <td class="clickable-name" onclick="openModal('${name}')">${name}</td>
           ${weekValues.map(v => {
             const pct = (v / WEEKLY_HOURS) * 100;
             return `<td><span class="weekly-cell ${getCellClass(pct)}">${v > 0 ? v.toFixed(1) + 'h' : '—'}</span></td>`;
