@@ -804,19 +804,19 @@
 <script>
 // ===== DATA =====
 const DATA = {
-  "generated_at": "2026-08-11T09:00:18",
-  "generated": "2026-08-11T09:00:18",
+  "generated_at": "2026-08-12T19:04:06",
+  "generated": "2026-08-12T19:04:06",
   "weeks": [
     "2026-W33"
   ],
   "weekly_hours": 38,
   "target_pct": 80,
-  "target_weekly_hours": 12.16,
-  "target_per_person": 12.16,
+  "target_weekly_hours": 18.24,
+  "target_per_person": 18.24,
   "week_start": "2026-08-10",
   "week_end": "2026-08-16",
-  "today": "2026-08-11",
-  "working_days_elapsed": 2,
+  "today": "2026-08-12",
+  "working_days_elapsed": 3,
   "days": [
     "2026-08-10",
     "2026-08-11",
@@ -832,11 +832,12 @@ const DATA = {
         "Loic": {
           "id": 2,
           "weekly": {
-            "2026-W33": 16.0
+            "2026-W33": 24.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
-            "2026-08-11": 8.0
+            "2026-08-11": 8.0,
+            "2026-08-12": 8.0
           },
           "details": [
             {
@@ -850,16 +851,24 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (2/7)"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (3/7)"
             }
           ]
         },
         "David": {
           "id": 45,
           "weekly": {
-            "2026-W33": 0.5
+            "2026-W33": 7.92
           },
           "current_week_daily": {
-            "2026-08-10": 0.5
+            "2026-08-10": 0.5,
+            "2026-08-11": 3.0,
+            "2026-08-12": 4.42
           },
           "details": [
             {
@@ -873,16 +882,83 @@ const DATA = {
               "hours": 0.08,
               "project": "Service Support Incident",
               "description": "Diagnostic panne réseau suite changement wifi. Impossibilité validation commandes par tablettes. Planification intervention sur site pour reconfiguration IP de l'ensemble du matériel."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 1.0,
+              "project": "S05692",
+              "description": "aller"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 1.0,
+              "project": "S05692",
+              "description": "retour"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.75,
+              "project": "S05692",
+              "description": "Installation et configuration de la nouvelle FDM 2.0 conformément à la réglementation. L'appareil est opérationnel et visible sur le portail, bien que la validation finale du SPF Finances soit actuellement en attente."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "call en watts app = terminal en DHCP = ok"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Diagnostic à distance terminal non prêt. Contact établi par WhatsApp avec cousin du client pour transmission procédure de redémarrage en anglais. Suivi nécessaire."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 2.58,
+              "project": "S06153",
+              "description": "Installation et configuration d'une boîte noire 2.0 ainsi que d'un routeur standard pour assurer la conformité du système de caisse. L'intervention a également inclus un accompagnement personnalisé de la cliente pour son enregistrement obligatoire sur le portail du SPF Finances."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.25,
+              "project": "Service Support Incident",
+              "description": "call client meme probleme avec l'imprimante cuisine = ok"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.25,
+              "project": "Service Support Incident",
+              "description": "call en watt app = retirer cable imprimante  = ok sur imprimante addtion"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.42,
+              "project": "Service Support Requête",
+              "description": "recherche en interne"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.42,
+              "project": "Création licence + Menu caisse - S06344",
+              "description": "export des articles + imports = ok"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.5,
+              "project": "Service Support Incident",
+              "description": "call avec le client = il perd ça connexion quand il y a du monde = check sur omada = je vois des deconnxion toute les heures d'un appareil dans le port 4 --> il faut aller voir sur place"
             }
           ]
         },
         "Nicolas Tatti": {
           "id": 38,
           "weekly": {
-            "2026-W33": 2.52
+            "2026-W33": 3.66
           },
           "current_week_daily": {
-            "2026-08-10": 2.52
+            "2026-08-10": 2.52,
+            "2026-08-11": 1.14
           },
           "details": [
             {
@@ -902,31 +978,313 @@ const DATA = {
               "hours": 1.14,
               "project": "Problème récurant RET --> mettre en 2.0 - S06515",
               "description": "Remplacement du terminal de paiement (RET) par un modèle de version 2.0 afin de résoudre les problèmes de connexion récurrents signalés par le client. L'installation et les tests de conformité ont permis de confirmer la résolution complète de l'incident."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.3,
+              "project": "Problème réseau - S06540",
+              "description": "Intervention réseau pour rétablir la connexion internet de la caisse via le rebranchement des boîtiers CPL. La prestation a été complétée par la reconfiguration du terminal de paiement et du monnayeur Glory pour assurer le plein fonctionnement du système."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.84,
+              "project": "lecteur RFID - bracelet silicone - S06455",
+              "description": "Installation et configuration d'un lecteur RFID ainsi que le paramétrage des supports utilisateurs. L'intervention a permis la mise en service de 20 bracelets magnétiques, à prévoir pour la facturation."
             }
           ]
         },
         "Nicolas Pierot": {
           "id": 49,
           "weekly": {
-            "2026-W33": 0
+            "2026-W33": 5.2
           },
-          "current_week_daily": {},
-          "details": []
+          "current_week_daily": {
+            "2026-08-11": 1.24,
+            "2026-08-12": 3.96
+          },
+          "details": [
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Prise en charge problème récurrent post-paiement : écran s'éteint, ticket non transmis cuisine. Vérification version en cours. confirmation du mail envoyé à RMX pour ce probleme -> demande initiale était de modifier l'heure de la cloture automatique -> mise à 02h05 comme à demandé le client -> en ordre"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Diagnostic terminal déconnecté empêchant encaissements. Tentative prise de contrôle via WhatsApp vidéo (Anydesk indisponible). Problème non résolu, report communication autre canal. --> appel whatsapp video -> client était sur le mauvais wifi -> une fois sur le bon wifi ça refonctionne -> expliqué au client de supprimé les wifi enregistre autres que \"urbanpos\" pour éviter probleme à l'avenir -> en ordre"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "appel pour suivi -> mais client toujours en attente de réceptionner les gobelets -> le client nous rappelera quand il les aura"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "appel pour suivi voir si client veut toujours car c'était pour un evenement d'un week end -> client en vacance jusqu'au 19/08 -> rappeler apres cette date"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Analyse demande code admin pour validation paiement carte sans terminal. Fourniture code bouton admin (23456) après proposition solution alternative paiement libre. Problème résolu."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "note pour Alex"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Appel sortant : explication système Android fermé non évolutif sur tablette. Client conteste, demande manager. Transmission demande escalade à la hiérarchie."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Écoute message vocal client. Aucun retour possible, attente rappel pour diagnostic du problème évoqué."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Suivi proactif problème boîte noire post-coupure électrique. Cliente confirme résolution."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.1,
+              "project": "Service Support Requête",
+              "description": "Prise de contrôle à distance suite contrôle FOD. Vérification données caisse et confirmation présence uniquement transactions post-installation boîte noire (depuis 23/06). Cliente rassurée."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "tentative d'appel -> resté 2 minutes sur une boite musicale -> pas eu de réponse -> je reessaierai plus tard"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "tentative d'appel pour expliquer au client et voir s'il a reussi a cloturer ticket -> pas de reponse -> message laissé"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Suivi proactif banc contact. Vérification bon fonctionnement suite fixation IP effectuée veille. Nouveau contrôle programmé sous 48h."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.22,
+              "project": "Service Support Requête",
+              "description": "Création compte formation Restomax suite problème affichage bouton 'join' sur mobile. Vérification dossier : absence prévisite facturée confirmée. Installation validée pour le lendemain."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Validation résolution problème déconnexion boîte Nord après redémarrage manuel. Vérification voyant vert fixe et confirmation bon fonctionnement avec client."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.13,
+              "project": "Service Support Requête",
+              "description": "Explication différence nom bouton (roue dentée) et nom article (crayon) lors configuration matrice pour événement. Validation affichage tickets de caisse."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "appel whatsapp video car la cliente ne trouvait pas le bouton \"parametre\" -> changement landscape en horizontal"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Tentative diagnostic blocage rotation écran Restomax. Échec prise contrôle à distance (Anidesk/Host). Transfert dépannage via WhatsApp pour assistance visuelle directe."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "ecoute de la demande -> la cliente se demande pourquoi elle n'a pas eu de prévisite sur site avant son installation qui est prévue demain -> je demande dans le groupe whatsapp support car Vincent esghain aurait fait la prévisite mais à son domicile , hors ce n'est pas là qu'on l'installe..."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Ajustement paramétrage clôture automatique à 23h30. Accompagnement client sur procédure validation fin de journée. Configuration validée et instructions fournies. --> cliente me confirme qu'on peut laisser cloture automatique, qu'elle s'est arrangée avec son frère qui viendra sur place avant la cloture. elle m'a demande de modifié cloture auto de 23h00 à 23h30 -> en ordre"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "suite en whatsapp video -> madame n'arrivait pas a retirer le cash arriere de l'imprimante -> avons débranché et rebranché cable ethernet -> plus de probleme pour imprimer les tickets"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.09,
+              "project": "Service Support Incident",
+              "description": "Diagnostic perte connexion imprimante tickets. Vérification câblage à distance infructueuse. Proposition assistance visio WhatsApp pour diagnostic approfondi problème matériel."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "j'ai vu avec Faysal -> il a envoyé un mail au client et a corriger les prix"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Feedback pour Sandro pour calldesk pour les appels manqués qui restent en \"manqué\" tant qu'on est en appel client -> test fait au bureau et feedback fait à Sandro"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.33,
+              "project": "Service Projet",
+              "description": "Activation ticket Z simplifié et correction format tickets de commande par prise de contrôle. Explication impossibilité remise à zéro quotidienne numérotation commandes."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.0,
+              "project": "Service Support Requête",
+              "description": "Activation ticket Z simplifié et correction format tickets de commande par prise de contrôle. Explication impossibilité remise à zéro quotidienne numérotation commandes."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "note TTA"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Admin / Comptabilité",
+              "description": "note charlotte"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Admin / Comptabilité",
+              "description": "Fourniture tarif rouleaux thermiques 80x80 (84€ HT/50 pièces). Transmission demande renvoi factures manquantes au service administratif."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Analyse demande contrôle à distance tablette iPad pour annulation encaissements. Explication limitations sécurité Apple et proposition alternative Android. Cliente refuse changement matériel. Problème non résolu."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Demande supervision caisses à distance depuis Espagne. Explications limitations TeamViewer iPad (visualisation seule vs contrôle complet Android). Appel interrompu, client à recontacter pour finaliser solution."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.33,
+              "project": "Service Support Requête",
+              "description": "ecoute de la demande -> le client dit que le salade sous tasse est trop cher -> j'ai mis les prix en liste de prix comme il m'a demande -> David m'a dit que ça allait modifié partout et que je devais voir avec Faysale -> j'ai appelé Faysale Whatsapp et il va regarder ça quand il arrive au bureau -> en cours"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "assist Julia pour plan salle \"exterieur gravier\" et \"terrasse couverte\" pour dupliquer Etang des fouilles -> MDZ"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Diagnostic absence CA sur back office : caisse non clôturée depuis le 15/11. Explication procédure Z journalier et rappel obligation légale de clôture quotidienne."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Fermeture service dimanche midi effectuée. Confirmation de suppression plage horaire brasserie (14-18h)"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.33,
+              "project": "Service Support Requête",
+              "description": "recherche avec Robin pour la demande de limiter 16 couverts par quart d'heure -> le probleme c'est qu'il y a des gens qui reservent sur des périodes de 2H , et du coup cette période de 2H est également bloquée -> le client ne veut donc pas ça"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.42,
+              "project": "Service Support Requête",
+              "description": "Configuration système réservation Restomax : limitation à 16 couverts par quart d'heure pour réguler affluence dimanche, maintien possibilité réservations manuelles illimitées."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "rappel du client pour suivi -> voo est passé et il a un tres bon débit (entre 500 et 800 mbps) -> par contre il n'a pas sû trop bien m'expliquer mais il a remarqué que les pockets se déconnectaient du wifi pour se connecter sur la tablette lenovo ??? (j'ai pas trop bien compris, lui même non plus) -> appel prévu demain vers 11h30-11h40 pour suite car il a du monde"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "ecoute de la demande -> le client signale qu'apres qu'un collegue ait utilisé sa caisse , a oublié de se délogué avec le compte admin -> le client demandait pour faire un timeshift off avec l'user admin -> en ordre"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "appel du client -> le scanner est connecté et fonctionnel -> il attend toujours le cable pour pouvoir brancher la balance "
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Écoute message vocal client et analyse demande support. Identification problématique et préparation dossier pour rappel traitement."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Prise en main à distance du pocket. Création du dossier RMX manquant et vérification des permissions système. Erreur au lancement de Restomax corrigée."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Rappel de Messager de Bruxelles + Opa wemmel mais ils avaient déjà été rappelé . Bug calldesk pour la cloche (appel manqué) ?"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "ecoute de la demande -> la cliente ne peut plus utiliser RMX , ça dit que sa licence est bloquée -> juste délier sa licence et redémarrer RMX -> en ordre"
+            }
+          ]
         },
         "Julia": {
           "id": 25,
           "weekly": {
-            "2026-W33": 5.14
+            "2026-W33": 15.01
           },
           "current_week_daily": {
-            "2026-08-10": 5.14
+            "2026-08-10": 5.14,
+            "2026-08-11": 3.86,
+            "2026-08-12": 6.01
           },
           "details": [
             {
               "date": "2026-08-10",
               "hours": 0.17,
               "project": "Service Support Requête",
-              "description": "Appel du client > a faire demain"
+              "description": "Appel du client > a faire demain , a rappeler vers 11h30"
             },
             {
               "date": "2026-08-10",
@@ -1119,17 +1477,384 @@ const DATA = {
               "hours": 0.08,
               "project": "Service Support Incident",
               "description": "Mail au client"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Note à David"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Mail au client pour cloture puisque celui-ci ne reviens jamais vers nous"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Alex a send un mail et jamais reçu de réponse > je clos"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "relance client par mail"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Note à NPI"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "je clos, le client n'envoit jamais les images"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Demande à Julien si il sait où cela en ai en mp"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Note à Alex"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support urbanpos",
+              "description": "David lui renvoie l'offre > je clos"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Tentative d'appel > sans réponse > impossible de laisser un message"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Appel avec le client > celui-ci n'éteins pas sa caisse > j'ai mis la cloture avec encaissement en cash des documents en attente > a voir demain > je dois rappeler le client à 9h"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Appel de Céline pour synchro avec JC demain pour l'install de chez Noya Housse"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support urbanpos",
+              "description": "Le client à rappelé car a priori ce n'est pas possible d'avoir internet dans leur établissement  - demande des explications sur le routeur 4g celui-ci va réfléchir pour le routeur 4G"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support urbanpos",
+              "description": "Appel avec le client celui-ci indique que Proximus n'est pas passé mais celui-ci reviendra vers nous au besoin"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Envoi mail à restomax"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "demande sur le groupe si quelqu'un à une vidéo illustrant le problème"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Discussion avec Alex"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Tentative de rappel > sans réponse > message vocal laissé avec explication"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Diagnostic problème d'imprimante à distance. Redémarrage effectué, fonctionnement rétabli. Confirmation résolution par message vocal au client."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.33,
+              "project": "Service Support Incident",
+              "description": "Appel avec le client, celui-ci explique qu'il n'avait pas internet > en effet aucun câble était branché dans le WAN -> nous avons branché le câble, puis désactivé le wifi, j'ai fixé l'adresse ip en statique > tests effectués > en ordre"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Note à NPI"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Note à Thomas"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "le client demande que la cloture auto se fasse à 23h30 avec encaissement en cash > a surveiller demain si c'est bon en revanche le client indique que le rapport Z sur l'imprimante de la caisse ne sort pas > a voir demain"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.25,
+              "project": "Service Support Requête",
+              "description": "Configuration effectué > test effectué > en ordre"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Tentative d'appel > sans réponse > message vocal laissé"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Réponse à Restomax suite à la réponse de Killian avec l'aide de Loic"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Note à Faysal"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.5,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Réunion avec Audrey pour fiche de poste"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Tentative d'appel > sans réponse > impossible de laisser un message"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support urbanpos",
+              "description": "Tentative d'appel > sans réponse > impossible de laisser un message vocal"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "changement de société déjà en cours"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Projet",
+              "description": "aide NPI"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Appuie de la demande de Robin"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Note à David"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "note à thomas"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Suivi proactif clôture automatique : problème résolu Arcs, persiste Fréjus. Planification intervention ce soir avec collègue. Conseil paramétrage listes prix établissement et système fidélisation."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "le client aimerait les lecteurs de badge pour ses clients > on verra ensuite pour la fidélité > led crée à Maxence"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Appel avec le client, il serait effectivement idéale de mettre en place les listes de prix pour tous ses stores"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Appel avec le client pour suivi > la cloture s'est bien effectué et les rapports Z sont bien sortis > en ordre"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "mail envoyé au client pour savoir quel est le nom de l'article car je ne vois aucun article configuré en menu"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "analyse avec le nom de l'article et en effet celui-ci n'est pas du tout configuré en menu > explication par mail au client + demande à celui-ci de nous contacter pour l'aider"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Projet",
+              "description": "Écoute message vocal client. Tentative rappel sans réponse. Nouveau message laissé demandant précisions sur nature du problème rencontré."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Projet",
+              "description": "Déploiement effectué ce matin, je dois appeler demain à 12h pour faire le nécessaire avec le client"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 2.0,
+              "project": "Création licence + Menu caisse - S06344",
+              "description": "Encodage des articles + plan de salle + paramètres POS et store"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support urbanpos",
+              "description": "opportunité créer pour Julien"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Projet",
+              "description": "La cliente rappellera quand elle sera sur place pour les layout d'impression > pour la demande de simplifier le numéro de commande , je l'ai déjà fait à distance"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.09,
+              "project": "Service Projet",
+              "description": "Analyse demande personnalisation ticket Z et numérotation commandes nouvelle caisse rue Aubois. Intervention sur site nécessaire, rappel programmé présence client."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Discussion avec Thomas et David pour installation chez MDZ food"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.25,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Discussion avec David pour souci chez le Bar&Vous"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Planification intervention pour reconfiguration application. Rendez-vous téléphonique programmé avec le client pour traitement ultérieur du dossier."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Appel avec le client > Planifié demain à 17h"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Opportunité pour little apo"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Discussion avec Charlotte pour Biname"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Rappel cliente > nous avons désinstaller et réinstaller l'app > en ordre"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.25,
+              "project": "Service Support Incident",
+              "description": "Modification paramètre clôture automatique à 23h45. Reset synchronisation effectué. Instructions données pour vérification lendemain. Suivi à prévoir."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.33,
+              "project": "Service Support Incident",
+              "description": "Appel avec le client , la clôture ne s'est pas effectué mais le client ne sait plus si il a clôturé la caisse ou si celle-ci était éteinte et que la caisse s'est cloturé lors de l'allumage > a suivre demain"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.09,
+              "project": "Service Support Requête",
+              "description": "Demande pour réinitialiser toutes les donées sur sa caisse > demande en interne si cela est possible"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Note à Thomas"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support urbanpos",
+              "description": "Lead crée pour David"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Rappel différé client, arrivée sur site dans 15 minutes ,celui-ci rappellera"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support urbanpos",
+              "description": "Lead créer pour David"
             }
           ]
         },
         "Hendrik": {
           "id": 16,
           "weekly": {
-            "2026-W33": 16.0
+            "2026-W33": 24.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
-            "2026-08-11": 8.0
+            "2026-08-11": 8.0,
+            "2026-08-12": 8.0
           },
           "details": [
             {
@@ -1143,17 +1868,24 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (7/10)"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (8/10)"
             }
           ]
         },
         "Hugo": {
           "id": 31,
           "weekly": {
-            "2026-W33": 16.0
+            "2026-W33": 24.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
-            "2026-08-11": 8.0
+            "2026-08-11": 8.0,
+            "2026-08-12": 8.0
           },
           "details": [
             {
@@ -1167,16 +1899,24 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (7/16)"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (8/16)"
             }
           ]
         },
         "Robin Duez": {
           "id": 19,
           "weekly": {
-            "2026-W33": 5.26
+            "2026-W33": 16.92
           },
           "current_week_daily": {
-            "2026-08-10": 5.26
+            "2026-08-10": 5.18,
+            "2026-08-11": 4.95,
+            "2026-08-12": 6.79
           },
           "details": [
             {
@@ -1184,12 +1924,6 @@ const DATA = {
               "hours": 0.08,
               "project": "Service Support Requête",
               "description": "Clarification demande accès distant. Validation solution QuickSupport sur tablette pour gestion caisse pendant absence. Explication installation autonome par le client."
-            },
-            {
-              "date": "2026-08-10",
-              "hours": 0.08,
-              "project": "Service Support Requête",
-              "description": "Écoute message vocal Robin Duez. Demande modification texte bornes client Maquipordien Carvel. Traitement en cours, attente retour informations complémentaires."
             },
             {
               "date": "2026-08-10",
@@ -1424,6 +2158,378 @@ const DATA = {
               "hours": 0.08,
               "project": "Service Support Incident",
               "description": "Message envoyé à restomax concernant ce soucis"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 1.0,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Test interne + aide collègue"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Pas de réponse de restomax. Eux ont ANNULE mon ticket, Nouveau mail fait à restomax."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "La cliente n'a pas appelé aujourd'hui je l'appelerai demain en matinée."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Discussion avec le client. il va garder la configuration actuelle . et voir demain vers 12h si ça va ou pas."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Tentative d'appel, pas de réponse. Message vocal laissé. (appel de suivis)."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Tentative d'appel de suivis. pas de réponse . message vocal laissé."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "La cliente n'a pas encore de retour du spf. Ticket toujours en attente."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Mise à jour du ticket, lien du ticket restomax mis."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Tentative d'appel, pas de réponse. Message vocal laissé."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Appel avec le client, je dois le rappeler dans 5min."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Tentative d'appel, pas de réponse. Message vocal laissé."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "LE problème s'est reproduit sur l'heure de midi. Le client a refait la même manipulation qu'hier : Enlever le câble ethernet venant du routeur . Et prendre le câble ethernet qui venait du switch de l'autre borne . J'ai demandé si pendant ce problème il y avait beaucoup de clients à ce moment."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Pas de soucis pendant le service. je vais voir avec le client si il veut qu'on monitore ce soir."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Le client appellera vendredi vers 13h. Pour changer le modem proximus. Et rebrancher les câbles ou il faut."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Ajouts du choix de gout pour les LATTE. Et pour les LATTES a emporter aussi."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.25,
+              "project": "Service Support Requête",
+              "description": "Changement articles et configurations. Tout est fait. il reste juste à changer des propositions pour des \"LATTE CHAUD\". David doit demander des infos au client."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Monitoring. Pour l'instant pas de soucis depuis 11h30 environ."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Analyse compatibilité application pointage sur tablette VHECR POS 80 Android obsolète. Recherche solution auprès équipe technique pour mise à jour système ou alternative matérielle. APPLICATION WAPPLI."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Appel vidéo whatsapp fait .il n'y avait pas de réseau à nous connecté sur l'IPAD. L'adresse IP était rouge tout en bas de l'écran. Pas de réseau wifi à nous dans la liste. On a trouvé le routeur. le routeur était éteint. On a changé la prise d'alimentation d'endroit. routeur démarre. Wifi apparut. test ok."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Diagnostic tablette déconnectée suite inondation. Passage en visio WhatsApp pour assistance reconnexion à distance."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.67,
+              "project": "Service Support Incident",
+              "description": "Diagnostic problèmes multiples : tickets Z (résolu spontanément), fonctionnalités split bill et modification prix manquantes. Vérifications paramétrages en cours, dossier transféré pour suivi technique. MONITORING EN COURS."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Message du client, il y a des lenteurs au niveau de la cloture. On a remplacé la boite noire RET. Par une 2.0. Le client nous rappellera."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Demande à Nicolas T. Si il a eu des soucis hier lors la cloture qu'il a faite hier : PAS DE SOUCIS."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.0,
+              "project": "Service Support Incident",
+              "description": "Samedi Le client a rappelé mais il y avait des soucis généraux web service. Je clos ce ticket."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Après des tentatives de contact avec le client. Celui ci n'est plus revenu vers nous. Je mets en done à facturer."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Appel vidéo fait. Le terminal est connecté en 4G-5G . On a fait une initialisation TML. Redémarrer le terminal. Fermer restomax et réouvert. Test OK tout est bon."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Diagnostic dysfonctionnement terminal Castomac. Page paiement non affichée, paiements en manuel. Prise rendez-vous assistance vidéo WhatsApp pour analyse à distance et résolution."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "recherche d'info sur google. Le sunmi du client serait compatible avec VIVA. Et contact avec le client pour lui informer que si c'est bien compatible. ce sera facturé, et qu'il y aura un lien a payer par mois."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.42,
+              "project": "Service Support Incident",
+              "description": "Appel avec le client, on a mis de l'ordre dans quelques adresses IP. Bornes , imprimantes bornes. Le reste on a laissé comme ça , car quand on a changé d'adresse IP ça ne fonctionnait pas, ou alors il y avait une raison pour que les adresses IP soient configurés d'une certaine façon. Test OK tout fonctionne. Le client a enlevé le câble venant de la borne 1 vers la 2. Et a remis le câble qui vient directement du routeur dans le switch. Tout est bon."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Tentative d'appel, pas de réponse. Message vocal laissé."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Appel fait, je dois rappeler le client dans 5min."
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Info donnée à Julia par rapport à la configuration buzzer."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "Service Support Requête",
+              "description": "Accompagnement création matrices événementielles personnalisées (tapis fleurs, Noël, fête nationale). Problèmes affichage côté client. Planification visioconférence WhatsApp pour finalisation. CREATION MATRICE TAPIS FLEURS . uniquement pour un évènement. J'ai expliqué comment modifier une matrice, créer une matrice. Duppliquer un article. Le modifier. J'ai expliqué comment rendre une matrice et inactive. Je vais expliquer à Nicolas P . Ce qu'il faudra voir avec le client si jamais il rappelle."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.0,
+              "project": "Service Support Incident",
+              "description": "Discussion avec ALEX. Je dois avoir le client en ligne, et prendre le controle . Et le dire à ALEX. Lui fera le nécessaire à ce moment."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Nicolas T avait réglé le soucis du terminal. Je clos."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Demande à Nicolas T, si il avait pu changer le câble du terminal de paiement . Et si tout fonctionnait après son passage."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Analyse problème bornes passant à écran noir. Validation solution redémarrage application. Remontée du dysfonctionnement aux développeurs pour correction définitive."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Demande à JYP et Alex qu'un d'eux contacte JON en direct."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Rappel client Piccolo Piazza suite message vocal. Problème articles se modifiant automatiquement. En attente retour client avec personne sur site pour diagnostic à distance."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.75,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Aide collègue."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Tentative d'appel de suivis. pas de réponse . message vocal laissé."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Test validé. je dois appeler le client demain."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "Service Support Requête",
+              "description": "Configuration Et test interne . En attente qu'un collègue valide le layout."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Contact avec le client, pour savoir si il y a eu des soucis ce jour."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Pas de retour du client , ni des clients sur place. Je clos."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Le client ne nous plus recontacter depuis le 3 AOUT. Je clos ce ticket . Le client devait également revenir vers nous ."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Demande à JYP et Alex qu'un d'eux contacte JON en direct."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Suivi problème article imprimé sur ticket séparé. Relance Alexandre pour obtenir solution. Rappel client prévu après retour info."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.5,
+              "project": "Service Support Incident",
+              "description": "Diagnostic blocage clôture caisse récurrente depuis 1 semaine. Reconfiguration réseau WiFi pour problèmes connexion pockets. Consultation équipe prévue, intervention sur site envisagée. LE CLIENT DOIT VOIR CE Qu'il se passe pendant le service. Si il a des soucis avec les pockets. Et AVANT DE FAIRE LA CLOTURE. Il doit faire UPLOAD VENTES."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.5,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Aide collègue + test interne."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "+32 470 91 03 79 Numéro de Carmelo. Tentative d'appel, pas de réponse . message vocal laissé."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Appel de la cliente, Question pour enlever des articles. Enlever TOUTES les glaces . mais garder Les Yaourts . ATTENTION MEME MATRICE POUR TOUT LES ETABLISSEMENTS GREEK . NE RIEN FAIRE POUR L'INSTANT. Je dois contacter CARMELO."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Un bouton d'alimentation n'est pas fonctionnelle à l'extérieur de la borne. La cliente doit accéder à l'intérieur pour allumer ou éteindre. Il n'y aurait pas de play store?   Dossier transmis a Jawhad cashmatic."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Le client doit contacté CORIOTECH. on ne trouve pas les imprimantes BAR ET CUISINE sur le réseau.. Message whatsapp fait au client."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.5,
+              "project": "Service Support Incident",
+              "description": "Appel avec le client On a configuré les sorties imprimantes. Une Cuisine et 2 sorties bar. Pour l'instant tout sort sur l'imprimante ADDITION. Il n'y a que cette imprimante fonctionnelle actuellement."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Tentative d'appel à CARMELO . Pas de réponse. message vocal laissé."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.25,
+              "project": "Service Support Requête",
+              "description": "Paramétrage première borne réalisé malgré difficultés initiales. Seconde borne bloquée par problèmes connexion réseau empêchant installation applications. Dossier transmis à Cashematic pour intervention technique. Sur une des bornes , on a pu faire les changements MAIS IL N'Y A PAS DE BUZZER . C'est des chevalets. j'ai changé le texte et adapté pour les chevalets."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.25,
+              "project": "Service Support Incident",
+              "description": "Diagnostic imprimantes cuisine et bar inactives. Imprimante caisse fonctionnelle, problème réseau identifié côté Coreotech. Rappel programmé dans 10 min pour résolution."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Le client n'a pas eu de soucis lié aux déconnexions des slaves. Cependant il a encore eu le soucis lors de la cloture. Ca charge sans cloturer. Le client sera sur place vers 10h"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "Appel fait, la cliente rappellera dans 1h"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Configuration imprimante nécessaire. Message vocal laissé au client pour rappel et planification intervention à distance."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Clarification demande Wi-Fi : configuration adresses IP imprimantes déjà effectuée sur réseau existant. Explication inutilité nouveau réseau. Consigne vérification réception IP par imprimantes."
             }
           ]
         }
@@ -1450,11 +2556,12 @@ const DATA = {
         "Jonathan": {
           "id": 46,
           "weekly": {
-            "2026-W33": 16.0
+            "2026-W33": 24.5
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
-            "2026-08-11": 8.0
+            "2026-08-11": 8.0,
+            "2026-08-12": 8.5
           },
           "details": [
             {
@@ -1468,18 +2575,62 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (1/1)"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "coordonnés de facturation sur base du PO  4503586237 - S05320",
+              "description": "RETOUR"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "S04622",
+              "description": "Menu et config"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 5.5,
+              "project": "coordonnés de facturation sur base du PO  4503586237 - S05320",
+              "description": "Installation et formation"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "coordonnés de facturation sur base du PO  4503586237 - S05320",
+              "description": "ALLER"
             }
           ]
         },
         "Kevin": {
           "id": 12,
           "weekly": {
-            "2026-W33": 0.91
+            "2026-W33": 9.91
           },
           "current_week_daily": {
-            "2026-08-10": 0.91
+            "2026-08-10": 2.32,
+            "2026-08-11": 6.34,
+            "2026-08-12": 1.25
           },
           "details": [
+            {
+              "date": "2026-08-10",
+              "hours": 0.58,
+              "project": "Remplacement tablette - remise Licence - S06525",
+              "description": "aller"
+            },
+            {
+              "date": "2026-08-10",
+              "hours": 0.58,
+              "project": "Remplacement tablette - remise Licence - S06525",
+              "description": "retour"
+            },
+            {
+              "date": "2026-08-10",
+              "hours": 0.25,
+              "project": "Remplacement tablette - remise Licence - S06525",
+              "description": "remise en route de la licence ft"
+            },
             {
               "date": "2026-08-10",
               "hours": 0.33,
@@ -1489,7 +2640,7 @@ const DATA = {
             {
               "date": "2026-08-10",
               "hours": 0.5,
-              "project": "Indique ici le sujet de cette vente - S06045",
+              "project": "coordonnés de facturation sur base du PO  4503586237 - S05320",
               "description": "déploiement"
             },
             {
@@ -1497,17 +2648,42 @@ const DATA = {
               "hours": 0.08,
               "project": "Service Support Incident",
               "description": "appel sans réponse"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.67,
+              "project": "coordonnés de facturation sur base du PO  4503586237 - S05320",
+              "description": "aller"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.67,
+              "project": "coordonnés de facturation sur base du PO  4503586237 - S05320",
+              "description": "retour"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 5.0,
+              "project": "coordonnés de facturation sur base du PO  4503586237 - S05320",
+              "description": "installation + service de midi"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.25,
+              "project": "Problème réseau - S06579",
+              "description": "Intervention réseau sur le site « Le Bar & Vous » à Baisy-Thy pour une durée de 75 minutes. Aucun remplacement de matériel ni observation spécifique n'ont été consignés lors de cette prestation."
             }
           ]
         },
         "Sébastien": {
           "id": 24,
           "weekly": {
-            "2026-W33": 16.0
+            "2026-W33": 24.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
-            "2026-08-11": 8.0
+            "2026-08-11": 8.0,
+            "2026-08-12": 8.0
           },
           "details": [
             {
@@ -1521,17 +2697,23 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (1/1)"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (1/1)"
             }
           ]
         },
         "Pierre": {
           "id": 48,
           "weekly": {
-            "2026-W33": 8.49
+            "2026-W33": 8.83
           },
           "current_week_daily": {
             "2026-08-10": 7.99,
-            "2026-08-11": 0.5
+            "2026-08-11": 0.84
           },
           "details": [
             {
@@ -1608,6 +2790,18 @@ const DATA = {
             },
             {
               "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "rouleau bancontact (Crédito) - S06529 - Livraison Standard En Province",
+              "description": "Envoi MACA"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.17,
+              "project": "SUPPLIES - Rouleaux pour P3 - S06517 - Livraison Standard En Province",
+              "description": "Préparation matériel + Envoi MACA"
+            },
+            {
+              "date": "2026-08-11",
               "hours": 0.5,
               "project": "PROJET OFFICE - TEAM STOCK",
               "description": "Préparation commandes S06045 S05549"
@@ -1629,10 +2823,19 @@ const DATA = {
         "Charlotte": {
           "id": 47,
           "weekly": {
-            "2026-W33": 0
+            "2026-W33": 8.0
           },
-          "current_week_daily": {},
-          "details": []
+          "current_week_daily": {
+            "2026-08-10": 8.0
+          },
+          "details": [
+            {
+              "date": "2026-08-10",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (1/1)"
+            }
+          ]
         },
         "Olivia": {
           "id": 33,
