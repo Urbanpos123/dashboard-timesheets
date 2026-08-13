@@ -804,19 +804,19 @@
 <script>
 // ===== DATA =====
 const DATA = {
-  "generated_at": "2026-08-12T19:04:06",
-  "generated": "2026-08-12T19:04:06",
+  "generated_at": "2026-08-13T10:08:55",
+  "generated": "2026-08-13T10:08:55",
   "weeks": [
     "2026-W33"
   ],
   "weekly_hours": 38,
   "target_pct": 80,
-  "target_weekly_hours": 18.24,
-  "target_per_person": 18.24,
+  "target_weekly_hours": 24.32,
+  "target_per_person": 24.32,
   "week_start": "2026-08-10",
   "week_end": "2026-08-16",
-  "today": "2026-08-12",
-  "working_days_elapsed": 3,
+  "today": "2026-08-13",
+  "working_days_elapsed": 4,
   "days": [
     "2026-08-10",
     "2026-08-11",
@@ -832,12 +832,13 @@ const DATA = {
         "Loic": {
           "id": 2,
           "weekly": {
-            "2026-W33": 24.0
+            "2026-W33": 32.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
             "2026-08-11": 8.0,
-            "2026-08-12": 8.0
+            "2026-08-12": 8.0,
+            "2026-08-13": 8.0
           },
           "details": [
             {
@@ -857,6 +858,12 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (3/7)"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (4/7)"
             }
           ]
         },
@@ -996,11 +1003,11 @@ const DATA = {
         "Nicolas Pierot": {
           "id": 49,
           "weekly": {
-            "2026-W33": 5.2
+            "2026-W33": 6.23
           },
           "current_week_daily": {
             "2026-08-11": 1.24,
-            "2026-08-12": 3.96
+            "2026-08-12": 4.99
           },
           "details": [
             {
@@ -1083,6 +1090,36 @@ const DATA = {
             },
             {
               "date": "2026-08-12",
+              "hours": 0.17,
+              "project": "Service Support Requête",
+              "description": "Explication fonctionnement duplication d'articles pour matrices. Démonstration création articles distincts avec IDs différents. Client rassuré sur comportement normal du logiciel."
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "rappel de la cliente whatsap avec les identifiants et ça fonctionne pour la cliente (pour les tutos RMX)"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.33,
+              "project": "Service Support Incident",
+              "description": "Diagnostic problème clôture automatique. Modification horaires clôture de 23h00 à 23h30. Paramétrage encaissement cash pour documents en attente. Explication maintien écran Restomax actif sinon cloture automatique ne fonctionne pas. Le client n'était pas au courant de ça pour la cloture auto !!!!"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.33,
+              "project": "Service Support Incident",
+              "description": "appel whatsapp video -> lorsqu'on veut cloturer la caisse -> ca dit qu'il y a toujours des tickets qui ne sont pas synchronisés -> malgré un upload vente dans gestion caisse et upload vente dans tiroir caisse, le Z ne veut pas se faire -> j'investigue"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Rappel client pour problème impression ticket Z après 7 jours d'absence. Tentative prise main à distance via Anydesk échouée. Transfert vers WhatsApp vidéo pour diagnostic connexion."
+            },
+            {
+              "date": "2026-08-12",
               "hours": 0.22,
               "project": "Service Support Requête",
               "description": "Création compte formation Restomax suite problème affichage bouton 'join' sur mobile. Vérification dossier : absence prévisite facturée confirmée. Installation validée pour le lendemain."
@@ -1095,7 +1132,7 @@ const DATA = {
             },
             {
               "date": "2026-08-12",
-              "hours": 0.13,
+              "hours": 0.17,
               "project": "Service Support Requête",
               "description": "Explication différence nom bouton (roue dentée) et nom article (crayon) lors configuration matrice pour événement. Validation affichage tickets de caisse."
             },
@@ -1272,12 +1309,13 @@ const DATA = {
         "Julia": {
           "id": 25,
           "weekly": {
-            "2026-W33": 15.01
+            "2026-W33": 19.99
           },
           "current_week_daily": {
             "2026-08-10": 5.14,
             "2026-08-11": 3.86,
-            "2026-08-12": 6.01
+            "2026-08-12": 5.93,
+            "2026-08-13": 5.06
           },
           "details": [
             {
@@ -1776,12 +1814,6 @@ const DATA = {
               "date": "2026-08-12",
               "hours": 0.08,
               "project": "Service Support Requête",
-              "description": "Planification intervention pour reconfiguration application. Rendez-vous téléphonique programmé avec le client pour traitement ultérieur du dossier."
-            },
-            {
-              "date": "2026-08-12",
-              "hours": 0.08,
-              "project": "Service Support Requête",
               "description": "Appel avec le client > Planifié demain à 17h"
             },
             {
@@ -1843,18 +1875,85 @@ const DATA = {
               "hours": 0.08,
               "project": "Service Support urbanpos",
               "description": "Lead créer pour David"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Suivi clôture de caisse quotidienne. Vérification bon fonctionnement et impression rapport. Client confirme résolution complète, aucune anomalie détectée."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Support — Non résolu — 00:50"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Requête",
+              "description": "le numéro n'existe plus .."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Alex à indiqué qu'il fallait faire une vidéo à Restomax > Robin s'en occupe pour son ticket"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Projet",
+              "description": "Cloture auto bien effectué > en ordre"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Vérification > la cloture s'est bien effectué !! > appel avec le client, le rapport z également est bien sorti > en ordre"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Tentative d'appel > sans réponse et impossible de laisser un message vocal - Mail envoyé à la cliente"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Projet",
+              "description": "j'ai tout mis dans document sur la tâche de configuration install"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.25,
+              "project": "S05575",
+              "description": "Appel avec la cliente qui demande quand elle sera installé, la cliente m'a envoyé son menu en PDF j'ai tout mis dans Document > Alex est au courant"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.17,
+              "project": "PROJET OFFICE - TEAM SUPPORT",
+              "description": "Appel d'un client pour savoir quand sera son installation > demande à Alex"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 4.0,
+              "project": "Internal",
+              "description": "Congé (1/1)"
             }
           ]
         },
         "Hendrik": {
           "id": 16,
           "weekly": {
-            "2026-W33": 24.0
+            "2026-W33": 32.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
             "2026-08-11": 8.0,
-            "2026-08-12": 8.0
+            "2026-08-12": 8.0,
+            "2026-08-13": 8.0
           },
           "details": [
             {
@@ -1874,18 +1973,25 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (8/10)"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (9/10)"
             }
           ]
         },
         "Hugo": {
           "id": 31,
           "weekly": {
-            "2026-W33": 24.0
+            "2026-W33": 32.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
             "2026-08-11": 8.0,
-            "2026-08-12": 8.0
+            "2026-08-12": 8.0,
+            "2026-08-13": 8.0
           },
           "details": [
             {
@@ -1905,18 +2011,25 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (8/16)"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (9/16)"
             }
           ]
         },
         "Robin Duez": {
           "id": 19,
           "weekly": {
-            "2026-W33": 16.92
+            "2026-W33": 17.73
           },
           "current_week_daily": {
             "2026-08-10": 5.18,
             "2026-08-11": 4.95,
-            "2026-08-12": 6.79
+            "2026-08-12": 6.79,
+            "2026-08-13": 0.81
           },
           "details": [
             {
@@ -2530,6 +2643,66 @@ const DATA = {
               "hours": 0.17,
               "project": "Service Support Incident",
               "description": "Clarification demande Wi-Fi : configuration adresses IP imprimantes déjà effectuée sur réseau existant. Explication inutilité nouveau réseau. Consigne vérification réception IP par imprimantes."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.0,
+              "project": "Service Support Requête",
+              "description": "Tentative d'appel, pas de réponse après 1min d'attente. pas possible de laisser un message vocal."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Le client avait des soucis de slave qui se déconnectait de la master. J'ai vérifié plusieurs paramètres et connecter les slaves au réseau wifi PLUGANDPOS avec un S à la fin (réseau wifi pocket). Depuis plus de soucis. Je clos ce ticket."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "S06152 - [Forfait] Configuration Caisse Slave Multiposte [Prix/Unité]",
+              "description": "Tentative d'appel, pas de réponse. Message vocal laissé. A JEAN CALLENS."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Mail fait à restomax."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Hier il n'y a pas eu de soucis du tout. Je met ce ticket en done à facturer."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Le client a appelé hier , mais c'était pas du tout pour ce soucis . Je mets en done à facturer."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "Le problème de cloture est toujours présent. le client a de nouveau envoyé une vidéo ."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "Service Support Incident",
+              "description": "J'ai demandé aux collègues si ils ont une idée."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.08,
+              "project": "S06152 - [Forfait] Configuration Caisse Slave Multiposte [Prix/Unité]",
+              "description": "Tentative d'appel  , pas de réponse . Message vocal laissé . Le client doit nous contacter pour qu'on planifie un rdv à distance pour créer une nouvelle licence."
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.17,
+              "project": "Service Support Incident",
+              "description": "Prise de contrôle à distance pour déblocage clôture caisse. Annulation tickets non signés en attente. Explication procédure préventive au client. Problème résolu."
             }
           ]
         }
@@ -2605,12 +2778,12 @@ const DATA = {
         "Kevin": {
           "id": 12,
           "weekly": {
-            "2026-W33": 9.91
+            "2026-W33": 13.91
           },
           "current_week_daily": {
             "2026-08-10": 2.32,
             "2026-08-11": 6.34,
-            "2026-08-12": 1.25
+            "2026-08-12": 5.25
           },
           "details": [
             {
@@ -2669,6 +2842,30 @@ const DATA = {
             },
             {
               "date": "2026-08-12",
+              "hours": 0.25,
+              "project": "Remplacement tablette par une plus grande - S06500",
+              "description": "FORMATION LIEN PEPPOL"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.75,
+              "project": "Remplacement tablette par une plus grande - S06500",
+              "description": "INSTALLATION + LIEN VIVA"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.5,
+              "project": "Remplacement tablette par une plus grande - S06500",
+              "description": "ALLER"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.5,
+              "project": "Remplacement tablette par une plus grande - S06500",
+              "description": "RETOUR"
+            },
+            {
+              "date": "2026-08-12",
               "hours": 1.25,
               "project": "Problème réseau - S06579",
               "description": "Intervention réseau sur le site « Le Bar & Vous » à Baisy-Thy pour une durée de 75 minutes. Aucun remplacement de matériel ni observation spécifique n'ont été consignés lors de cette prestation."
@@ -2678,12 +2875,13 @@ const DATA = {
         "Sébastien": {
           "id": 24,
           "weekly": {
-            "2026-W33": 24.0
+            "2026-W33": 32.0
           },
           "current_week_daily": {
             "2026-08-10": 8.0,
             "2026-08-11": 8.0,
-            "2026-08-12": 8.0
+            "2026-08-12": 8.0,
+            "2026-08-13": 8.0
           },
           "details": [
             {
@@ -2703,17 +2901,25 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (1/1)"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (1/1)"
             }
           ]
         },
         "Pierre": {
           "id": 48,
           "weekly": {
-            "2026-W33": 8.83
+            "2026-W33": 24.49
           },
           "current_week_daily": {
             "2026-08-10": 7.99,
-            "2026-08-11": 0.84
+            "2026-08-11": 8.0,
+            "2026-08-12": 8.0,
+            "2026-08-13": 0.5
           },
           "details": [
             {
@@ -2790,6 +2996,42 @@ const DATA = {
             },
             {
               "date": "2026-08-11",
+              "hours": 1.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Configuration Sunmi M3"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.33,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Configuration Sunmi P3"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 1.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Tâche et gestion admin divers"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 0.75,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Vérification et tri matériel"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 2.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "reMontage borne S05210"
+            },
+            {
+              "date": "2026-08-11",
+              "hours": 2.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Configuration et mise à jour Sunmi D3 PRO"
+            },
+            {
+              "date": "2026-08-11",
               "hours": 0.17,
               "project": "rouleau bancontact (Crédito) - S06529 - Livraison Standard En Province",
               "description": "Envoi MACA"
@@ -2802,9 +3044,81 @@ const DATA = {
             },
             {
               "date": "2026-08-11",
-              "hours": 0.5,
+              "hours": 0.58,
               "project": "PROJET OFFICE - TEAM STOCK",
               "description": "Préparation commandes S06045 S05549"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Vérification inventaire et matériel"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Configuration Sunmi M3 HW + AP"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.75,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Rangement zone stock"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Tri matériel retour install"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.5,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Préparation commandes"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Configuration Sunmi D3 Mini"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.5,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Envois MACA"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 0.75,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Gestion prépa commandes"
+            },
+            {
+              "date": "2026-08-12",
+              "hours": 1.5,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Creation matrice S03453"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.17,
+              "project": "S06293 - Encodage boite noire SPF",
+              "description": "Préparation matériel"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.0,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Mise à jour Routeurs"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 0.33,
+              "project": "PROJET OFFICE - TEAM STOCK",
+              "description": "Gestion admin"
             }
           ]
         }
@@ -2823,10 +3137,11 @@ const DATA = {
         "Charlotte": {
           "id": 47,
           "weekly": {
-            "2026-W33": 8.0
+            "2026-W33": 16.0
           },
           "current_week_daily": {
-            "2026-08-10": 8.0
+            "2026-08-10": 8.0,
+            "2026-08-13": 8.0
           },
           "details": [
             {
@@ -2834,6 +3149,12 @@ const DATA = {
               "hours": 8.0,
               "project": "Internal",
               "description": "Congé (1/1)"
+            },
+            {
+              "date": "2026-08-13",
+              "hours": 8.0,
+              "project": "Internal",
+              "description": "Congé (1/2)"
             }
           ]
         },
